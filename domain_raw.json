@@ -1,0 +1,78 @@
+{
+  "domain_name": "island-treasure-hunt",
+  "requirements": ["strips", "typing"],
+  "types": ["adventurer", "location", "object", "creature"],
+  "predicates": [
+    "(adventurer-at ?a - adventurer ?l - location)",
+    "(object-at ?o - object ?l - location)",
+    "(creature-at ?c - creature ?l - location)",
+    "(accessible ?l - location)",
+    "(has-map ?a - adventurer)",
+    "(has-key ?a - adventurer)",
+    "(puzzle-solved ?l - location)",
+    "(ritual-performed ?a - adventurer)",
+    "(vision-received ?a - adventurer)"
+  ],
+  "actions": [
+    {
+      "name": "venture-into-jungle",
+      "parameters": ["?a - adventurer", "?jungle - location"],
+      "preconditions": ["(adventurer-at ?a sandy-shore)", "(accessible ?jungle)"],
+      "effects": ["(adventurer-at ?a ?jungle)", "(not (adventurer-at ?a sandy-shore))"]
+    },
+    {
+      "name": "head-towards-village",
+      "parameters": ["?a - adventurer", "?village - location"],
+      "preconditions": ["(adventurer-at ?a sandy-shore)", "(accessible ?village)"],
+      "effects": ["(adventurer-at ?a ?village)", "(not (adventurer-at ?a sandy-shore))"]
+    },
+    {
+      "name": "climb-tree",
+      "parameters": ["?a - adventurer", "?tree - location", "?jaguar - creature"],
+      "preconditions": ["(adventurer-at ?a jungle)", "(creature-at ?jaguar jungle)"],
+      "effects": ["(adventurer-at ?a tree)", "(not (adventurer-at ?a jungle))"]
+    },
+    {
+      "name": "assist-villagers",
+      "parameters": ["?a - adventurer", "?village - location"],
+      "preconditions": ["(adventurer-at ?a ?village)"],
+      "effects": ["(has-map ?a)"]
+    },
+    {
+      "name": "follow-hidden-path",
+      "parameters": ["?a - adventurer", "?hidden-path - location"],
+      "preconditions": ["(adventurer-at ?a tree)", "(accessible ?hidden-path)"],
+      "effects": ["(adventurer-at ?a ?hidden-path)", "(not (adventurer-at ?a tree))"]
+    },
+    {
+      "name": "explore-ruins",
+      "parameters": ["?a - adventurer", "?ruins - location"],
+      "preconditions": ["(adventurer-at ?a ?ruins)"],
+      "effects": ["(has-key ?a)"]
+    },
+    {
+      "name": "solve-puzzle",
+      "parameters": ["?a - adventurer", "?door - location"],
+      "preconditions": ["(adventurer-at ?a ?door)", "(has-key ?a)"],
+      "effects": ["(puzzle-solved ?door)"]
+    },
+    {
+      "name": "perform-ritual",
+      "parameters": ["?a - adventurer", "?sacred-site - location"],
+      "preconditions": ["(adventurer-at ?a ?sacred-site)"],
+      "effects": ["(ritual-performed ?a)"]
+    },
+    {
+      "name": "meditate",
+      "parameters": ["?a - adventurer", "?sacred-site - location"],
+      "preconditions": ["(adventurer-at ?a ?sacred-site)"],
+      "effects": ["(vision-received ?a)"]
+    },
+    {
+      "name": "enter-treasure-chamber",
+      "parameters": ["?a - adventurer", "?chamber - location"],
+      "preconditions": ["(adventurer-at ?a ?chamber)", "(puzzle-solved ?chamber)"],
+      "effects": ["(accessible ?chamber)"]
+    }
+  ]
+}

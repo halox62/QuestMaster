@@ -1,0 +1,29 @@
+{
+  "problem_name": "island-treasure-hunt",
+  "domain_name": "island-treasure-hunt",
+  "objects": {
+    "adventurer1": "adventurer",
+    "sandy-shore": "location",
+    "jungle": "location",
+    "village": "location",
+    "tree": "location",
+    "hidden-path": "location",
+    "ruins": "location",
+    "stone-door": "location",
+    "sacred-site": "location",
+    "treasure-chamber": "location",
+    "jaguar": "creature",
+    "key1": "object"
+  },
+  "init": [
+    "(adventurer-at adventurer1 sandy-shore)",
+    "(accessible sandy-shore)",
+    "(accessible jungle)",
+    "(accessible village)",
+    "(creature-at jaguar jungle)",
+    "(object-at key1 ruins)"
+  ],
+  "goal": [
+    "(adventurer-at adventurer1 treasure-chamber)"
+  ]
+}

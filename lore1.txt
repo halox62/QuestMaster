@@ -1,0 +1,38 @@
+title: "The Castle of Whispering Shadows"
+
+quest_description:
+  initial_state: |
+    The young wizard stands at the edge of the Whispering Forest, facing the ancient castle said to hold the Tome of Eternal Knowledge. 
+    He possesses no spells and has never entered the castle before. The skies above are darkened by magical storms, and the forest behind 
+    him whispers secrets in forgotten tongues. The wizard carries only his staff and an unyielding desire to learn the secrets of the ancients.
+
+  init: |
+   The wizard is located at the edge of the Whispering Forest, in front of the castle and has no spells to enter the castle where the library that holds the tome is located.
+
+  goal: |
+     The wizard must reach the Grand Library within the castle and obtain the Tome of Eternal Knowledge. 
+
+  obstacles: |
+    - The castle gates are sealed by an arcane lock, breakable only by specific spells.
+    - Some spells can be learned from forest spirits, others from ancient ruins.
+    - A wrong spell cast at the gate may summon a guardian or cause the castle to vanish temporarily.
+    - Time is limited; magical storms grow stronger as the day progresses.
+
+  world_context: |
+    The world is one of ancient magic, where knowledge is power and power is hidden behind riddles and ruins. Long ago, the Archmage 
+    Council sealed away forbidden tomes in the Castle of Whispering Shadows. Now, few dare to approach it. The wizard, orphaned 
+    and mentored by books alone, sees this as his only chance to ascend to mastery.
+
+branching_factor:
+  min_actions_per_state: 2
+  max_actions_per_state: 4
+  note: |
+    At each point in the story, the wizard should have at least 2 meaningful choices—such as whether to seek knowledge, attempt entry,
+    or explore—up to 4 when paths diverge more widely (e.g., which spell to learn or which area to explore).
+
+depth_constraints:
+  min_steps_to_goal: 5
+  max_steps_to_goal: 10
+  note: |
+    The shortest path might involve learning the correct spell directly and entering the castle.
+    A longer path could involve multiple diversions: failed attempts, side quests, or trials before reaching the library.

@@ -1,0 +1,25 @@
+STDOUT:
+INFO     planner time limit: None
+INFO     planner memory limit: None
+
+INFO     Running translator.
+INFO     translator stdin: None
+INFO     translator time limit: None
+INFO     translator memory limit: None
+INFO     translator command line string: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 /Users/giorgiomartucci/Downloads/QuestMaster/downward/builds/release/bin/translate/translate.py domain.pddl problem.pddl --sas-file output.sas
+Parsing...
+Parsing domain
+	->Parsing axiom/action entry #1
+	->Parsing action #1
+	->Parsing action 'find-spell'
+	->Parsing precondition
+	->Parsing condition
+	->Parsing literal
+Undefined object
+Got: -
+translate exit code: 31
+
+Driver aborting after translate
+INFO     Planner time: 0.08s
+
+STDERR:

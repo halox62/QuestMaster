@@ -1,1 +1,28 @@
-The wizard had to know a spell to enter the castle
+title: ""
+
+quest_description:
+  init: |
+    An adventurer arrives alone on an island with a backpack
+
+  goal: |
+     find the hidden treasure on the island that his grandfather, also an adventurer, was looking for
+
+  obstacles: |
+    the natives, the jungle, traps near the treasure and the puzzles
+
+  world_context: |
+    the island is located in central america where it is thought that there is a treasure the island is protected by not very friendly islands with foreigners where there is often a risk of hurricane
+
+branching_factor:
+  min_actions_per_state: 2
+  max_actions_per_state: 4
+  note: |
+    At each point in the story, the wizard should have at least 2 meaningful choices—such as whether to seek knowledge, attempt entry,
+    or explore—up to 4 when paths diverge more widely (e.g., which spell to learn or which area to explore).
+
+depth_constraints:
+  min_steps_to_goal: 5
+  max_steps_to_goal: 10
+  note: |
+    The shortest path might involve learning the correct spell directly and entering the castle.
+    A longer path could involve multiple diversions: failed attempts, side quests, or trials before reaching the library.
