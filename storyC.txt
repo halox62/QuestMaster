@@ -1,0 +1,416 @@
+1  
+**Current State:**  
+- at_shore: true  
+- at_jungle_edge: false  
+- medallion_found: false  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer has just arrived alone on the island shore, carrying a backpack, an old map, and a compass. He has not yet ventured inland or encountered any natives or dangers. The island’s geography is clear in your mind: you stand at the *shore* location, with the *jungle edge* just ahead. Beyond the jungle lies the *collapsed cave*, rumored to hold a sacred obsidian medallion. Further inland are the *village* and the ancient *temple*, home to an altar puzzle guarding the island’s treasure. You are aware that venomous traps lurk near the cave and temple, and that a native ally may be encountered along the way.
+
+**Narrative Description:**  
+The salty breeze brushes against your face as you stand on the sun-drenched shore of the mysterious island. Palm trees sway gently behind you, and the dense jungle looms ahead, a wall of green mystery and whispered secrets. Your grandfather’s old map, worn and faded, flutters in your hand, revealing only a partial path inland. The compass needle quivers uncertainly, as if sensing the island’s hidden dangers. The air is thick with the scent of damp earth and blooming orchids, but beneath the beauty lies an undercurrent of menace. Somewhere deep within the jungle, a sacred obsidian medallion waits, the key to unlocking the island’s ancient treasure. You know the journey will be perilous—venomous traps near the cave and temple, hostile natives, and confusing trails lie ahead. Yet, the promise of discovery and the legacy of your grandfather’s quest push you forward. The jungle edge beckons, a threshold between the known and the unknown.
+
+**Choices:**  
+→ *Venture directly into the jungle edge via the main trail*: (updates at_shore: false, at_jungle_edge: true) [go to 2]  
+→ *Scout the shoreline for a safer, less obvious path inland*: (updates at_shore: false, at_jungle_edge: true, wounded: false) [go to 3]  
+→ *Set up a temporary camp to rest and study the map more carefully*: (updates at_shore: true, wounded: false) [go to 4]  
+
+---
+
+2  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: true  
+- medallion_found: false  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer has left the shore and arrived at the jungle edge by taking the main trail, ready to explore deeper. You know a venomous trap is hidden near the collapsed cave ahead.
+
+**Narrative Description:**  
+The jungle edge greets you with a cacophony of life—chirping birds, rustling leaves, and distant howls. The path ahead is narrow and tangled, vines hanging like serpents ready to strike. The air grows humid, thick with the scent of moss and decaying wood. You notice faint footprints and broken branches, signs that others have passed this way, but whether friend or foe remains unknown. The map offers little guidance here, and the dense canopy filters the sunlight into eerie patterns. Somewhere beyond lies the collapsed cave rumored to hold the sacred medallion. Your heart pounds with anticipation and caution. Every step could trigger a hidden trap or draw the attention of the island’s wary natives. The jungle is alive, watching, waiting.
+
+**Choices:**  
+→ *Take the direct path toward the collapsed cave, ignoring minor warnings*: (updates at_jungle_edge: false, medallion_found: false, wounded: true) [go to 5]  
+→ *Search carefully for traps and safe routes, moving slowly*: (updates at_jungle_edge: false, medallion_found: false, wounded: false) [go to 6]  
+→ *Call out to see if any natives are nearby, hoping for peaceful contact*: (updates at_jungle_edge: true, ally_present: true) [go to 7]  
+
+---
+
+3  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: true  
+- medallion_found: false  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer has scouted the shoreline and found a less obvious path inland, arriving safely at the jungle edge without injury.
+
+**Narrative Description:**  
+You skirt the shoreline, eyes peeled for hidden dangers and alternative routes. The salty tang of the sea fades as the dense jungle encroaches, its shadows deep and inviting. You find a narrow, less traveled trail veiled by thick ferns and hanging moss. The ground is soft beneath your boots, muffling your steps. The air hums with the buzz of insects and the distant call of exotic birds. This path feels safer, less likely to harbor traps, but it is longer and more winding. The map offers no clues here, but your instincts tell you this route might avoid the worst dangers. Still, the jungle’s secrets are many, and the unknown waits just beyond the next bend.
+
+**Choices:**  
+→ *Proceed cautiously along the hidden trail toward the collapsed cave*: (updates at_jungle_edge: false, medallion_found: false, wounded: false) [go to 6]  
+→ *Pause to gather edible plants and fresh water, preparing for the journey ahead*: (updates at_jungle_edge: true, wounded: false, ally_present: false) [go to 4]  
+
+---
+
+4  
+**Current State:**  
+- at_shore: true or false (depending on previous choice)  
+- at_jungle_edge: true or false (depending on previous choice)  
+- medallion_found: false  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer has chosen to rest and study the map more carefully before proceeding, either at the shore or jungle edge.
+
+**Narrative Description:**  
+You set down your pack and kindle a small fire, the smoke curling into the humid air. The map, worn and fragile, lies spread before you, its faded ink revealing hints of forgotten paths and landmarks. The rhythmic crash of waves soothes your nerves as you sip water and nibble on dried fruit. Rest is a luxury here, but necessary. Your fingers trace the lines on the map, piecing together the journey ahead. The jungle’s dangers loom large, but knowledge is your greatest weapon. As the sun dips lower, shadows lengthen, and the island’s nocturnal chorus begins. You feel a renewed sense of purpose, ready to face the trials that await.
+
+**Choices:**  
+→ *Enter the jungle edge cautiously, following the main trail*: (updates at_shore: false, at_jungle_edge: true) [go to 2]  
+→ *Attempt to signal any nearby natives with a smoke signal, hoping for allies*: (updates ally_present: true) [go to 7]  
+
+---
+
+5  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: false  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: true  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer took the direct path toward the collapsed cave, ignoring minor warnings, and was wounded by a venomous trap.
+
+**Narrative Description:**  
+Ignoring the subtle signs of danger, you press forward along the direct path. Suddenly, a sharp sting erupts in your leg—a hidden venomous dart from a concealed trap. Pain blossoms quickly, and your vision blurs as the poison courses through your veins. The jungle seems to close in, the vibrant greens turning ominous. You stumble, clutching your wound, heart pounding with fear and adrenaline. The medallion’s promise feels distant now, overshadowed by the urgent need to survive. The path ahead is uncertain, and every breath is a battle. You must decide quickly whether to push onward or seek aid before the poison claims you.
+
+**Choices:**  
+→ *Push forward despite the wound, determined to reach the cave*: (updates wounded: true, medallion_found: true) [go to 8]  
+→ *Retreat to the jungle edge to tend your injury*: (updates wounded: false, at_jungle_edge: true) [go to 6]  
+→ *Attempt to find medicinal plants nearby to counteract the poison*: (updates poisoned: false, wounded: false) [go to 4]  
+
+---
+
+6  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: false  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer has carefully searched for traps and safe routes, moving slowly toward the collapsed cave without injury.
+
+**Narrative Description:**  
+With cautious steps, you navigate the tangled undergrowth, eyes sharp for any sign of danger. The jungle’s whispers guide you past hidden pits and venomous thorns. The air grows cooler as you approach the mouth of the collapsed cave, its jagged entrance half-swallowed by vines and shadows. The carved obsidian medallion is said to lie within, a relic of immense power and significance. The cave’s darkness is thick and foreboding, but your resolve is steady. You prepare your torch, heart steady despite the unknown. The jungle’s dangers have been momentarily held at bay by your vigilance, but the cave’s secrets await, promising both peril and reward.
+
+**Choices:**  
+→ *Enter the collapsed cave to search for the medallion*: (updates medallion_found: true) [go to 8]  
+→ *Circle around the cave to look for alternative entrances or signs of natives*: (updates ally_present: true) [go to 7]  
+
+---
+
+7  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: true or false (depending on path)  
+- medallion_found: false or true (depending on path)  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: true  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer has made contact with natives or found an ally by calling out or signaling, but has not yet earned their trust or entered the village.
+
+**Narrative Description:**  
+Your cautious calls echo through the dense foliage, and after tense moments, a figure emerges—a native explorer, wary but curious. His eyes gleam with intelligence and caution. Communication is halting but hopeful; gestures and shared symbols bridge the language gap. He offers guidance through the jungle’s labyrinthine paths and warns of traps and storms. His presence is a balm to your solitude, a beacon of hope amid the island’s dangers. Yet, trust is fragile here, and the village remains a guarded place. With this ally, your chances improve, but the journey is far from over. The medallion and the temple still await, and the path ahead demands both courage and diplomacy.
+
+**Choices:**  
+→ *Follow the native ally toward the collapsed cave*: (updates medallion_found: true) [go to 8]  
+→ *Ask the ally to accompany you to the village to earn native trust*: (updates village_entered: true, native_trust_earned: true, ally_present: true) [go to 9]  
+→ *Venture alone toward the village, hoping to prove yourself*: (updates village_entered: true) [go to 10]  
+
+---
+
+8  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: true  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: true or false (depending on path)  
+- poisoned: false  
+- ally_present: true or false (depending on path)  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer has successfully retrieved the carved obsidian medallion from the collapsed cave, possibly wounded or accompanied by an ally.
+
+**Narrative Description:**  
+Clutching the cold, carved obsidian medallion, you emerge from the cave’s shadowy depths. The air outside feels charged, as if the island itself acknowledges your success. The medallion’s intricate symbols shimmer faintly in the dappled sunlight, a key to the natives’ trust and the temple’s secrets. Yet, the journey is far from over. The village lies ahead, a place of wary eyes and guarded hearts. Without the natives’ trust, the path to the temple will remain closed, and the treasure unreachable. Your wounds ache, but the weight of the medallion in your hand fuels your determination. The jungle’s dangers still lurk, but now you carry hope and a vital token of passage.
+
+**Choices:**  
+→ *Proceed directly to the village to present the medallion*: (updates village_entered: true) [go to 9]  
+→ *Rest and tend wounds before approaching the village*: (updates wounded: false) [go to 4]  
+→ *Seek out the native ally to accompany you to the village*: (updates ally_present: true, village_entered: true) [go to 9]  
+
+---
+
+9  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: true  
+- native_trust_earned: true  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false or true (depending on path)  
+- poisoned: false  
+- ally_present: true or false (depending on path)  
+- temple_accessible: false  
+- village_entered: true  
+
+**Prerequisites:**  
+The adventurer has entered the village and earned the natives’ trust by presenting the medallion, possibly accompanied by an ally.
+
+**Narrative Description:**  
+The village is a cluster of thatched huts nestled beneath towering ceiba trees, alive with the hum of daily life. Children pause their play to watch you, elders eye you with cautious respect. Presenting the sacred medallion, you feel a shift in the atmosphere—a silent acknowledgment of your intentions and heritage. The natives’ wary gazes soften, and a few nod in approval. Your ally stands by your side, a bridge between worlds. Stories are shared, and knowledge of the temple’s puzzles and traps is imparted. The path to the temple entrance, once shrouded in mystery, now feels within reach. Yet, the final challenge awaits: the ancient altar puzzle guarding the treasure vault. Your heart quickens with anticipation and resolve.
+
+**Choices:**  
+→ *Travel with the natives’ guidance toward the temple outskirts*: (updates temple_accessible: true) [go to 11]  
+→ *Explore the village further to gather more information and supplies*: (updates ally_present: true) [go to 10]  
+→ *Rest in the village to recover fully before the final journey*: (updates wounded: false) [go to 4]  
+
+---
+
+10  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: true or false (depending on path)  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false or true (depending on path)  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: true  
+
+**Prerequisites:**  
+The adventurer has entered the village without earning the natives’ trust, either by venturing alone or without the medallion.
+
+**Narrative Description:**  
+You step cautiously into the village, the eyes of the natives sharp and unwelcoming. Without the sacred medallion or an ally to vouch for you, suspicion hangs thick in the air. Whispers ripple through the crowd, and a tense silence falls. Suddenly, a group of villagers blocks your path, their expressions hard and unyielding. The jungle’s protective spirits seem to turn against you. Your attempts to explain fall on deaf ears. The village elders warn you to leave or face consequences. The treasure’s promise fades as hostility rises. The path forward is barred, and the jungle’s dangers close in. Without trust, the temple remains a distant dream.
+
+**Choices:**  
+→ *Attempt to flee the village before conflict escalates*: (updates wounded: true) [go to 12 ❌]  
+→ *Try to negotiate peace despite the natives’ hostility*: (updates wounded: true) [go to 13 ❌]  
+
+---
+
+11  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: true  
+- native_trust_earned: true  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: true  
+- temple_accessible: true  
+- village_entered: true  
+
+**Prerequisites:**  
+The adventurer, trusted by the natives and accompanied by an ally, has reached the temple outskirts.
+
+**Narrative Description:**  
+The jungle thins as you approach the temple’s looming silhouette, ancient stones etched with cryptic symbols rising against the sky. The air is cooler here, tinged with the scent of incense and earth. Your native ally points out hidden traps and explains the altar puzzle’s significance—a test of wisdom and respect for the island’s heritage. The carved obsidian medallion pulses faintly in your hand, a key to unlocking the temple’s secrets. The path is clear but fraught with challenge. Every step echoes with the weight of history and the promise of treasure. Your heart beats steady, fueled by trust, knowledge, and determination. The final trial awaits.
+
+**Choices:**  
+→ *Attempt to solve the altar puzzle using the medallion and knowledge gained*: (updates puzzle_solved: true) [go to 14]  
+→ *Explore the temple grounds for clues before attempting the puzzle*: (updates ally_present: true) [go to 15]  
+→ *Rest briefly to prepare mentally for the puzzle*: (updates wounded: false) [go to 4]  
+
+---
+
+12 ❌  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: false or true  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: true  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer attempted to flee the hostile village without trust and was wounded during the escape.
+
+**Narrative Description:**  
+Panic surges as you dash through the village, native shouts ringing in your ears. A sharp pain sears your side—a thrown spear finds its mark. You stumble into the dense jungle, blood staining the leaves beneath you. The poison from the wound spreads quickly, and your strength wanes. The island’s beauty fades into a blur of pain and shadow. Alone, wounded, and hunted, your quest ends here, swallowed by the jungle’s merciless embrace. The treasure remains hidden, a secret lost to time.
+
+**Choices:**  
+→ *No further choices. The adventurer succumbs to his injuries.*  
+
+---
+
+13 ❌  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: false or true  
+- native_trust_earned: false  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: true  
+- poisoned: false  
+- ally_present: false  
+- temple_accessible: false  
+- village_entered: false  
+
+**Prerequisites:**  
+The adventurer tried to negotiate peace with hostile natives without the medallion and was wounded in the attempt.
+
+**Narrative Description:**  
+Your words fall on deaf ears as tension spirals into violence. A sudden blow to your head sends you crashing to the ground, pain exploding behind your eyes. The natives close in, their faces grim and unforgiving. Darkness creeps at the edges of your vision as you lose consciousness. When you awaken, you find yourself bound and alone, a prisoner of the island’s wrath. The treasure’s promise fades into a nightmare of captivity and despair. The jungle’s secrets remain locked away, and your journey ends in defeat.
+
+**Choices:**  
+→ *No further choices. The adventurer remains captive, ending the quest.*  
+
+---
+
+14  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: true  
+- native_trust_earned: true  
+- puzzle_solved: true  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: true  
+- temple_accessible: true  
+- village_entered: true  
+
+**Prerequisites:**  
+The adventurer has reached the temple, trusted by natives, and solved the altar puzzle using the medallion and knowledge gained.
+
+**Narrative Description:**  
+With steady hands, you place the obsidian medallion into the altar’s carved indentation. Symbols glow softly, ancient mechanisms humming to life. The puzzle’s final piece clicks into place, and a hidden door grinds open, revealing a chamber bathed in golden light. The treasure vault lies before you—chests overflowing with jewels, artifacts, and relics of a forgotten civilization. Your heart swells with triumph and reverence. The journey’s trials—the jungle, the cave, the village, the temple—have all led to this moment. The island’s secrets are yours to claim, a legacy fulfilled. Your grandfather’s map was only the beginning; your courage and wisdom have unlocked the true treasure.
+
+**Choices:**  
+→ *Claim the treasure and prepare to leave the island*: (updates treasure_claimed: true) [go to 16 ✅]  
+→ *Examine the treasure carefully for hidden traps or secrets*: (updates treasure_claimed: true) [go to 16 ✅]  
+
+---
+
+15 ❌  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: true  
+- native_trust_earned: true  
+- puzzle_solved: false  
+- treasure_claimed: false  
+- wounded: false  
+- poisoned: false  
+- ally_present: true  
+- temple_accessible: true  
+- village_entered: true  
+
+**Prerequisites:**  
+The adventurer explored the temple grounds but delayed solving the altar puzzle.
+
+**Narrative Description:**  
+Curiosity leads you to wander the temple grounds, searching for clues and hidden chambers. But as shadows lengthen, a sudden tropical storm erupts, rain lashing and thunder crashing. The ancient stones become slick and treacherous. Without solving the altar puzzle promptly, you trigger a hidden trap—a volley of poisoned darts shoots from the walls. You collapse, the venom coursing through your veins. Your ally tries to help, but the poison is swift and unforgiving. The treasure remains locked away, and your quest ends in the temple’s dark embrace.
+
+**Choices:**  
+→ *No further choices. The adventurer succumbs to the trap’s poison.*  
+
+---
+
+16 ✅  
+**Current State:**  
+- at_shore: false  
+- at_jungle_edge: false  
+- medallion_found: true  
+- native_trust_earned: true  
+- puzzle_solved: true  
+- treasure_claimed: true  
+- wounded: false  
+- poisoned: false  
+- ally_present: true  
+- temple_accessible: true  
+- village_entered: true  
+
+**Prerequisites:**  
+The adventurer has claimed the treasure after solving the altar puzzle and earning native trust.
+
+**Narrative Description:**  
+Treasure in hand, you stand amidst the golden glow of the vault, the weight of history and triumph settling around you. Your native ally smiles, a silent acknowledgment of shared victory and respect. The island’s mysteries have been unveiled through courage, wisdom, and alliance. As the storm outside subsides, you prepare to leave, the medallion and treasure secured. The journey was long and fraught with peril, but the legacy of your grandfather’s map is fulfilled. The island’s secrets now belong to you, a testament to perseverance and honor. The horizon beckons, and with a final glance at the ancient temple, you step forward into a new chapter of adventure.
+
+**Choices:**  
+→ *Begin the journey back to the shore, treasure secured* [End of quest]

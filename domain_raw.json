@@ -1,78 +1,310 @@
 {
-  "domain_name": "island-treasure-hunt",
+  "domain_name": "brava-island-adventure",
   "requirements": ["strips", "typing"],
-  "types": ["adventurer", "location", "object", "creature"],
+  "types": ["player", "location", "item", "trap", "puzzle", "ally"],
   "predicates": [
-    "(adventurer-at ?a - adventurer ?l - location)",
-    "(object-at ?o - object ?l - location)",
-    "(creature-at ?c - creature ?l - location)",
-    "(accessible ?l - location)",
-    "(has-map ?a - adventurer)",
-    "(has-key ?a - adventurer)",
-    "(puzzle-solved ?l - location)",
-    "(ritual-performed ?a - adventurer)",
-    "(vision-received ?a - adventurer)"
+    "(player-at ?p - player ?l - location)",
+    "(has ?p - player ?i - item)",
+    "(ally-present ?a - ally ?l - location)",
+    "(at-shore ?p - player)",
+    "(at-jungle-edge ?p - player)",
+    "(at-village ?p - player)",
+    "(at-collapsed-cave ?p - player)",
+    "(at-temple-entrance ?p - player)",
+    "(medallion-found ?p - player)",
+    "(native-trust-earned ?p - player)",
+    "(puzzle-solved ?p - player)",
+    "(treasure-claimed ?p - player)",
+    "(wounded ?p - player)",
+    "(storm-coming)",
+    "(trap-active ?t - trap ?l - location)",
+    "(trap-triggered ?t - trap ?l - location)",
+    "(puzzle-active ?z - puzzle ?l - location)"
   ],
   "actions": [
     {
-      "name": "venture-into-jungle",
-      "parameters": ["?a - adventurer", "?jungle - location"],
-      "preconditions": ["(adventurer-at ?a sandy-shore)", "(accessible ?jungle)"],
-      "effects": ["(adventurer-at ?a ?jungle)", "(not (adventurer-at ?a sandy-shore))"]
+      "name": "take-direct-jungle-path",
+      "parameters": ["?p - player", "?shore - location", "?jungle - location"],
+      "preconditions": ["(player-at ?p ?shore)", "(at-shore ?p)"],
+      "effects": [
+        "(player-at ?p ?jungle)",
+        "(at-jungle-edge ?p)",
+        "(not (player-at ?p ?shore))",
+        "(not (at-shore ?p))",
+        "(wounded ?p)"
+      ]
     },
     {
-      "name": "head-towards-village",
-      "parameters": ["?a - adventurer", "?village - location"],
-      "preconditions": ["(adventurer-at ?a sandy-shore)", "(accessible ?village)"],
-      "effects": ["(adventurer-at ?a ?village)", "(not (adventurer-at ?a sandy-shore))"]
+      "name": "follow-coastal-trail",
+      "parameters": ["?p - player", "?shore - location", "?jungle - location"],
+      "preconditions": ["(player-at ?p ?shore)", "(at-shore ?p)"],
+      "effects": [
+        "(player-at ?p ?jungle)",
+        "(at-jungle-edge ?p)",
+        "(not (player-at ?p ?shore))",
+        "(not (at-shore ?p))",
+        "(not (wounded ?p))"
+      ]
     },
     {
-      "name": "climb-tree",
-      "parameters": ["?a - adventurer", "?tree - location", "?jaguar - creature"],
-      "preconditions": ["(adventurer-at ?a jungle)", "(creature-at ?jaguar jungle)"],
-      "effects": ["(adventurer-at ?a tree)", "(not (adventurer-at ?a jungle))"]
+      "name": "press-on-to-collapsed-cave-despite-wound",
+      "parameters": ["?p - player", "?jungle - location", "?cave - location"],
+      "preconditions": ["(player-at ?p ?jungle)", "(at-jungle-edge ?p)", "(wounded ?p)"],
+      "effects": [
+        "(player-at ?p ?cave)",
+        "(at-collapsed-cave ?p)",
+        "(wounded ?p)",
+        "(not (player-at ?p ?jungle))",
+        "(not (at-jungle-edge ?p))"
+      ]
     },
     {
-      "name": "assist-villagers",
-      "parameters": ["?a - adventurer", "?village - location"],
-      "preconditions": ["(adventurer-at ?a ?village)"],
-      "effects": ["(has-map ?a)"]
+      "name": "retreat-to-coastal-trail-to-heal",
+      "parameters": ["?p - player", "?jungle - location", "?shore - location"],
+      "preconditions": ["(player-at ?p ?jungle)", "(at-jungle-edge ?p)", "(wounded ?p)"],
+      "effects": [
+        "(player-at ?p ?shore)",
+        "(at-shore ?p)",
+        "(wounded ?p)",
+        "(not (player-at ?p ?jungle))",
+        "(not (at-jungle-edge ?p))"
+      ]
     },
     {
-      "name": "follow-hidden-path",
-      "parameters": ["?a - adventurer", "?hidden-path - location"],
-      "preconditions": ["(adventurer-at ?a tree)", "(accessible ?hidden-path)"],
-      "effects": ["(adventurer-at ?a ?hidden-path)", "(not (adventurer-at ?a tree))"]
+      "name": "investigate-footprints",
+      "parameters": ["?p - player", "?jungle - location", "?a - ally"],
+      "preconditions": ["(player-at ?p ?jungle)", "(at-jungle-edge ?p)", "(not (wounded ?p))"],
+      "effects": [
+        "(ally-present ?a ?jungle)",
+        "(not (wounded ?p))"
+      ]
     },
     {
-      "name": "explore-ruins",
-      "parameters": ["?a - adventurer", "?ruins - location"],
-      "preconditions": ["(adventurer-at ?a ?ruins)"],
-      "effects": ["(has-key ?a)"]
+      "name": "head-directly-to-collapsed-cave",
+      "parameters": ["?p - player", "?jungle - location", "?cave - location"],
+      "preconditions": ["(player-at ?p ?jungle)", "(at-jungle-edge ?p)", "(not (wounded ?p))"],
+      "effects": [
+        "(player-at ?p ?cave)",
+        "(at-collapsed-cave ?p)",
+        "(not (player-at ?p ?jungle))",
+        "(not (at-jungle-edge ?p))"
+      ]
     },
     {
-      "name": "solve-puzzle",
-      "parameters": ["?a - adventurer", "?door - location"],
-      "preconditions": ["(adventurer-at ?a ?door)", "(has-key ?a)"],
-      "effects": ["(puzzle-solved ?door)"]
+      "name": "disarm-traps-carefully",
+      "parameters": ["?p - player", "?cave - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(at-collapsed-cave ?p)"],
+      "effects": [
+        "(medallion-found ?p)",
+        "(not (wounded ?p))"
+      ]
     },
     {
-      "name": "perform-ritual",
-      "parameters": ["?a - adventurer", "?sacred-site - location"],
-      "preconditions": ["(adventurer-at ?a ?sacred-site)"],
-      "effects": ["(ritual-performed ?a)"]
+      "name": "move-quickly-through-cave",
+      "parameters": ["?p - player", "?cave - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(at-collapsed-cave ?p)"],
+      "effects": [
+        "(medallion-found ?p)",
+        "(wounded ?p)"
+      ]
     },
     {
-      "name": "meditate",
-      "parameters": ["?a - adventurer", "?sacred-site - location"],
-      "preconditions": ["(adventurer-at ?a ?sacred-site)"],
-      "effects": ["(vision-received ?a)"]
+      "name": "trust-ally-completely",
+      "parameters": ["?p - player", "?a - ally", "?cave - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(ally-present ?a ?cave)", "(medallion-found ?p)"],
+      "effects": [
+        "(at-collapsed-cave ?p)",
+        "(ally-present ?a ?cave)"
+      ]
     },
     {
-      "name": "enter-treasure-chamber",
-      "parameters": ["?a - adventurer", "?chamber - location"],
-      "preconditions": ["(adventurer-at ?a ?chamber)", "(puzzle-solved ?chamber)"],
-      "effects": ["(accessible ?chamber)"]
+      "name": "keep-cautious-distance",
+      "parameters": ["?p - player", "?a - ally", "?cave - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(ally-present ?a ?cave)", "(medallion-found ?p)"],
+      "effects": [
+        "(at-collapsed-cave ?p)",
+        "(ally-present ?a ?cave)"
+      ]
+    },
+    {
+      "name": "hurry-to-village-through-storm",
+      "parameters": ["?p - player", "?cave - location", "?village - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(medallion-found ?p)"],
+      "effects": [
+        "(player-at ?p ?village)",
+        "(at-village ?p)",
+        "(wounded ?p)",
+        "(not (player-at ?p ?cave))",
+        "(not (at-collapsed-cave ?p))"
+      ]
+    },
+    {
+      "name": "seek-shelter-and-wait-out-storm",
+      "parameters": ["?p - player", "?cave - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(medallion-found ?p)"],
+      "effects": [
+        "(storm-coming)",
+        "(not (at-village ?p))"
+      ]
+    },
+    {
+      "name": "push-forward-to-village-despite-injury",
+      "parameters": ["?p - player", "?cave - location", "?village - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(wounded ?p)", "(medallion-found ?p)"],
+      "effects": [
+        "(player-at ?p ?village)",
+        "(at-village ?p)",
+        "(wounded ?p)",
+        "(not (player-at ?p ?cave))",
+        "(not (at-collapsed-cave ?p))"
+      ]
+    },
+    {
+      "name": "treat-wound-before-moving-on",
+      "parameters": ["?p - player", "?cave - location"],
+      "preconditions": ["(player-at ?p ?cave)", "(wounded ?p)", "(medallion-found ?p)"],
+      "effects": [
+        "(not (wounded ?p))",
+        "(not (at-village ?p))"
+      ]
+    },
+    {
+      "name": "present-medallion-respectfully-to-elders",
+      "parameters": ["?p - player", "?a - ally", "?village - location"],
+      "preconditions": ["(player-at ?p ?village)", "(ally-present ?a ?village)", "(medallion-found ?p)"],
+      "effects": [
+        "(native-trust-earned ?p)",
+        "(at-village ?p)",
+        "(ally-present ?a ?village)"
+      ]
+    },
+    {
+      "name": "attempt-to-sneak-into-village",
+      "parameters": ["?p - player", "?a - ally", "?village - location"],
+      "preconditions": ["(player-at ?p ?village)", "(ally-present ?a ?village)", "(medallion-found ?p)"],
+      "effects": [
+        "(not (native-trust-earned ?p))",
+        "(at-village ?p)",
+        "(ally-present ?a ?village)"
+      ]
+    },
+    {
+      "name": "explain-quest-openly-and-show-medallion",
+      "parameters": ["?p - player", "?village - location"],
+      "preconditions": ["(player-at ?p ?village)", "(medallion-found ?p)"],
+      "effects": [
+        "(native-trust-earned ?p)",
+        "(at-village ?p)"
+      ]
+    },
+    {
+      "name": "offer-gifts-to-villagers-to-gain-favor",
+      "parameters": ["?p - player", "?village - location"],
+      "preconditions": ["(player-at ?p ?village)", "(medallion-found ?p)"],
+      "effects": [
+        "(native-trust-earned ?p)",
+        "(at-village ?p)"
+      ]
+    },
+    {
+      "name": "act-defensively-and-prepare-for-conflict",
+      "parameters": ["?p - player", "?village - location", "?a - ally"],
+      "preconditions": ["(player-at ?p ?village)", "(medallion-found ?p)"],
+      "effects": [
+        "(not (native-trust-earned ?p))",
+        "(wounded ?p)",
+        "(at-village ?p)",
+        "(ally-present ?a ?village)"
+      ]
+    },
+    {
+      "name": "proceed-cautiously-to-village",
+      "parameters": ["?p - player", "?village - location"],
+      "preconditions": ["(storm-coming)"],
+      "effects": [
+        "(player-at ?p ?village)",
+        "(at-village ?p)",
+        "(not (storm-coming))"
+      ]
+    },
+    {
+      "name": "try-to-find-alternate-path-to-village",
+      "parameters": ["?p - player", "?village - location"],
+      "preconditions": ["(storm-coming)"],
+      "effects": [
+        "(not (at-village ?p))",
+        "(wounded ?p)",
+        "(not (storm-coming))"
+      ]
+    },
+    {
+      "name": "travel-directly-to-temple-entrance",
+      "parameters": ["?p - player", "?village - location", "?temple - location"],
+      "preconditions": ["(player-at ?p ?village)", "(native-trust-earned ?p)"],
+      "effects": [
+        "(player-at ?p ?temple)",
+        "(at-temple-entrance ?p)",
+        "(not (player-at ?p ?village))",
+        "(not (at-village ?p))"
+      ]
+    },
+    {
+      "name": "spend-time-with-natives-to-learn-puzzle",
+      "parameters": ["?p - player", "?a - ally", "?village - location"],
+      "preconditions": ["(player-at ?p ?village)", "(native-trust-earned ?p)"],
+      "effects": [
+        "(ally-present ?a ?village)",
+        "(puzzle-active altar-puzzle ?village)",
+        "(at-village ?p)"
+      ]
+    },
+    {
+      "name": "enter-temple-and-attempt-puzzle-immediately",
+      "parameters": ["?p - player", "?temple - location"],
+      "preconditions": ["(player-at ?p ?temple)", "(at-temple-entrance ?p)"],
+      "effects": [
+        "(puzzle-active altar-puzzle ?temple)"
+      ]
+    },
+    {
+      "name": "rest-longer-to-ensure-readiness",
+      "parameters": ["?p - player"],
+      "preconditions": ["(wounded ?p)"],
+      "effects": [
+        "(not (wounded ?p))"
+      ]
+    },
+    {
+      "name": "proceed-to-temple-entrance-to-solve-puzzle",
+      "parameters": ["?p - player", "?village - location", "?temple - location"],
+      "preconditions": ["(player-at ?p ?village)", "(ally-present ?a ?village)"],
+      "effects": [
+        "(player-at ?p ?temple)",
+        "(at-temple-entrance ?p)",
+        "(not (player-at ?p ?village))",
+        "(not (at-village ?p))"
+      ]
+    },
+    {
+      "name": "focus-carefully-and-solve-puzzle",
+      "parameters": ["?p - player", "?temple - location", "?z - puzzle"],
+      "preconditions": ["(player-at ?p ?temple)", "(puzzle-active ?z ?temple)"],
+      "effects": [
+        "(puzzle-solved ?p)",
+        "(treasure-claimed ?p)",
+        "(not (puzzle-active ?z ?temple))"
+      ]
+    },
+    {
+      "name": "force-mechanism-quickly",
+      "parameters": ["?p - player", "?temple - location", "?z - puzzle", "?t - trap"],
+      "preconditions": ["(player-at ?p ?temple)", "(puzzle-active ?z ?temple)"],
+      "effects": [
+        "(not (puzzle-solved ?p))",
+        "(wounded ?p)",
+        "(trap-triggered ?t ?temple)",
+        "(not (puzzle-active ?z ?temple))"
+      ]
     }
   ]
 }

@@ -1,0 +1,6 @@
+(follow-coastal-trail adventurer shore collapsed-cave)
+(investigate-footprints adventurer collapsed-cave native-ally)
+(proceed-to-temple-entrance-to-solve-puzzle adventurer native-ally collapsed-cave collapsed-cave)
+(enter-temple-and-attempt-puzzle-immediately adventurer collapsed-cave)
+(focus-carefully-and-solve-puzzle adventurer collapsed-cave altar-puzzle)
+; cost = 5 (unit cost)

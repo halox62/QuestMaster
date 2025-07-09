@@ -1,29 +1,40 @@
 {
-  "problem_name": "island-treasure-hunt",
-  "domain_name": "island-treasure-hunt",
+  "problem_name": "brava-island-treasure-quest",
+  "domain_name": "brava-island-adventure",
   "objects": {
-    "adventurer1": "adventurer",
-    "sandy-shore": "location",
-    "jungle": "location",
+    "adventurer": "player",
+    "shore": "location",
+    "jungle-edge": "location",
+    "collapsed-cave": "location",
     "village": "location",
-    "tree": "location",
-    "hidden-path": "location",
-    "ruins": "location",
-    "stone-door": "location",
-    "sacred-site": "location",
-    "treasure-chamber": "location",
-    "jaguar": "creature",
-    "key1": "object"
+    "temple-entrance": "location",
+    "medallion": "item",
+    "native-ally": "ally",
+    "altar-puzzle": "puzzle",
+    "deadly-trap": "trap"
   },
   "init": [
-    "(adventurer-at adventurer1 sandy-shore)",
-    "(accessible sandy-shore)",
-    "(accessible jungle)",
-    "(accessible village)",
-    "(creature-at jaguar jungle)",
-    "(object-at key1 ruins)"
+    "(player-at adventurer shore)",
+    "(at-shore adventurer)",
+    "(not (at-jungle-edge adventurer))",
+    "(not (at-village adventurer))",
+    "(not (at-collapsed-cave adventurer))",
+    "(not (at-temple-entrance adventurer))",
+    "(not (medallion-found adventurer))",
+    "(not (native-trust-earned adventurer))",
+    "(not (puzzle-solved adventurer))",
+    "(not (treasure-claimed adventurer))",
+    "(not (wounded adventurer))",
+    "(not (ally-present native-ally shore))",
+    "(not (ally-present native-ally jungle-edge))",
+    "(not (ally-present native-ally collapsed-cave))",
+    "(not (ally-present native-ally village))",
+    "(not (ally-present native-ally temple-entrance))",
+    "(not (storm-coming))",
+    "(trap-active deadly-trap collapsed-cave)",
+    "(puzzle-active altar-puzzle temple-entrance)"
   ],
   "goal": [
-    "(adventurer-at adventurer1 treasure-chamber)"
+    "(treasure-claimed adventurer)"
   ]
 }

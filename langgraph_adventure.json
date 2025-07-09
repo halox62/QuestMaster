@@ -1,273 +1,230 @@
 {
-  "node_1": {
-    "description": "The adventurer steps off the small boat onto the sandy shore of the island, the salty breeze ruffling his hair. His backpack is heavy with supplies, but his heart is light with the hope of finding the treasure his grandfather once sought. The jungle looms ahead, dense and mysterious, while to the left, a narrow path leads towards a small village. The adventurer must decide his first move.",
-    "options": {
-      "option_0": "node_2",
-      "option_1": "node_3",
-      "option_2": "node_4"
+    "node_1": {
+        "description": "**Current State:**  \n- at_shore: true  \n- at_jungle_edge: false  \n- medallion_found: false  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: false  \n- ally_present: false  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has just arrived alone on the island shore, carrying a backpack, an old map, and a compass. The dense jungle looms ahead, its edge visible beyond the sandy beach. The path inland is uncertain, and the air is thick with humidity and the scent of salt and earth.  \n\n**Narrative Description:**  \nThe sun beats down mercilessly as you stand on the sandy shore, waves gently lapping at your boots. The island’s dense jungle stretches before you, a wall of green shadows and tangled vines. Your grandfather’s old map flutters in the breeze, its faded lines hinting at secrets hidden deep within. The air is alive with the calls of distant birds and the rustle of unseen creatures. You know the first step is to reach the jungle edge, where the real journey begins. The path ahead is fraught with danger—venomous snakes, hidden traps, and the watchful eyes of the island’s natives. Yet, the promise of the sacred medallion and the treasure beyond drives you forward. You can choose to take the direct path through the dense undergrowth, risking hidden dangers, or follow the safer, winding coastal trail that may take longer but offers a chance to prepare.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Take the direct jungle path*: Move inland quickly but risk traps and injury (updates at_shore: false, at_jungle_edge: true, wounded: possibly false)",
+                "target": "node_2"
+            },
+            "option_1": {
+                "text": "*Follow the coastal trail*: Take a longer, safer route to the jungle edge, allowing time to observe surroundings (updates at_shore: false, at_jungle_edge: true, wounded: false)",
+                "target": "node_3"
+            }
+        }
+    },
+    "node_2": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: false  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: true  \n- ally_present: false  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has chosen the risky direct jungle path and reached the jungle edge but suffered a minor injury from a hidden trap.  \n\n**Narrative Description:**  \nThorns scrape your arms and the ground beneath your feet is uneven and slick with moss. Suddenly, a sharp sting in your leg causes you to stumble—an unseen trap has caught you off guard. You manage to free yourself, but a burning pain reminds you of the jungle’s dangers. The dense foliage parts ahead, revealing the shadowy outline of the collapsed cave rumored to hold the sacred medallion. The air is thick with the scent of damp earth and decay. You can press on despite your wound, risking further harm, or retreat to the coastal trail to tend your injury and seek safer passage. The jungle seems to whisper warnings, but the treasure calls louder.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Press on to the collapsed cave despite the wound*: Risk worsening injury but reach the cave faster (updates at_collapsed_cave: true, wounded: true)",
+                "target": "node_4"
+            },
+            "option_1": {
+                "text": "*Retreat to the coastal trail to heal*: Move back to safer ground, possibly losing time (updates at_jungle_edge: false, at_shore: true, wounded: true)",
+                "target": "node_3"
+            }
+        }
+    },
+    "node_3": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: false  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: false  \n- ally_present: false  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has safely reached the jungle edge via the coastal trail without injury.  \n\n**Narrative Description:**  \nThe coastal trail winds gently inland, the salty breeze mingling with the earthy aroma of the jungle. Birds flit overhead, and the distant sound of running water offers a soothing backdrop. You take your time, observing the flora and fauna, and patching your gear. The safer route has spared you injury, but the sun is beginning to dip, and the jungle’s shadows grow longer. Ahead, the dense trees mark the boundary of the jungle’s heart, where the collapsed cave lies hidden. You notice faint footprints and signs of recent activity—perhaps natives or other explorers. You can choose to investigate these signs for clues or head straight to the cave entrance.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Investigate the footprints*: Gain information that might help with native relations or traps (updates ally_present: true)",
+                "target": "node_5"
+            },
+            "option_1": {
+                "text": "*Head directly to the collapsed cave*: Proceed without delay (updates at_collapsed_cave: true)",
+                "target": "node_4"
+            }
+        }
+    },
+    "node_4": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: false  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: true  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: possibly true  \n- ally_present: possibly false  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has reached the collapsed cave, either wounded or uninjured, with or without an ally.  \n\n**Narrative Description:**  \nThe cave’s entrance is choked with fallen boulders and thick vines, the air inside stale and cool. Your footsteps echo softly as you navigate the narrow passages, careful to avoid the deadly venomous traps rumored to lurk within. The walls are etched with ancient symbols, their meanings lost to time but hinting at the cave’s sacred purpose. Somewhere in this darkness lies the carved obsidian medallion, a key to earning the natives’ trust. The silence is broken only by the distant drip of water and the occasional skitter of unseen creatures. You can choose to proceed cautiously, disarming traps as you go, or move quickly to avoid the growing storm clouds gathering outside.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Disarm traps carefully*: Reduce risk of injury but take more time (updates medallion_found: true, wounded: false)",
+                "target": "node_6"
+            },
+            "option_1": {
+                "text": "*Move quickly through the cave*: Risk injury but reach medallion faster (updates medallion_found: true, wounded: possibly true)",
+                "target": "node_7"
+            }
+        }
+    },
+    "node_5": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: false  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: false  \n- ally_present: true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has found signs of natives or other explorers and gained an ally before entering the jungle interior.  \n\n**Narrative Description:**  \nFollowing the faint footprints, you encounter a native explorer cautiously observing you from behind a tree. After a tense moment, you manage to communicate your peaceful intentions and your quest for the sacred medallion. The native, intrigued by your respect and the medallion’s significance, offers to guide you through the jungle’s dangers. With an ally by your side, the oppressive heat and tangled undergrowth feel less daunting. Together, you approach the collapsed cave, the native pointing out hidden traps and safe paths. The storm clouds gather overhead, threatening to unleash a tropical downpour. You can choose to trust your ally’s guidance fully or keep a cautious distance, wary of potential betrayal.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Trust the ally completely*: Gain valuable help but risk deception (updates at_collapsed_cave: true, ally_present: true)",
+                "target": "node_8"
+            },
+            "option_1": {
+                "text": "*Keep cautious distance*: Proceed with some help but remain alert (updates at_collapsed_cave: true, ally_present: true)",
+                "target": "node_6"
+            }
+        }
+    },
+    "node_6": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: true  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: false  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has successfully retrieved the medallion from the collapsed cave without injury, possibly with an ally.  \n\n**Narrative Description:**  \nThe obsidian medallion rests heavy in your palm, its carved surface cool and smooth despite the humid air. The cave’s shadows seem to recede as if acknowledging your success. Outside, the jungle awaits, thick with the scent of rain and earth. The path ahead leads to the native village, where presenting the medallion is the key to earning trust and safe passage. The native ally, if present, offers to accompany you, promising protection and guidance. The sky darkens as the first drops of a tropical storm begin to fall. You can choose to hurry to the village before the storm worsens or seek shelter and wait it out, risking delay but preserving your strength.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Hurry to the village through the storm*: Risk exhaustion and injury but gain time (updates at_village: true, wounded: possibly true)",
+                "target": "node_9"
+            },
+            "option_1": {
+                "text": "*Seek shelter and wait out the storm*: Stay safe but lose time (updates storm_coming: true, at_village: false)",
+                "target": "node_10"
+            }
+        }
+    },
+    "node_7": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: true  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: true  \n- ally_present: possibly false  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer rushed through the cave, found the medallion but sustained injury.  \n\n**Narrative Description:**  \nPain throbs in your side as you clutch the obsidian medallion, the cave’s traps having left their mark. The air feels heavier, and your breath comes in ragged gasps. Outside, the jungle seems less welcoming, the shadows deeper and the sounds more ominous. The path to the village is long and fraught with danger, and your injury slows you. You can push forward despite the pain or attempt to treat your wound with limited supplies, risking infection or delay. The natives’ village lies ahead, and without their trust, the journey to the temple will be impossible.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Push forward to the village despite injury*: Risk worsening condition but reach village sooner (updates at_village: true, wounded: true)",
+                "target": "node_9"
+            },
+            "option_1": {
+                "text": "*Treat wound before moving on*: Spend time healing but risk natives’ suspicion due to delay (updates wounded: false, at_village: false)",
+                "target": "node_10"
+            }
+        }
+    },
+    "node_8": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: true  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: false  \n- ally_present: true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has trusted the native ally fully and retrieved the medallion safely.  \n\n**Narrative Description:**  \nWith the native explorer by your side, the jungle’s dangers seem less daunting. The ally points out hidden paths and warns of traps, their knowledge invaluable. The medallion’s significance is clear to them, and they speak of the village elders who will welcome you if you prove respectful. The storm clouds gather, but your companion assures you the village is close. Trusting your ally’s guidance, you move swiftly and safely through the jungle, the bond of alliance growing stronger. Soon, the sounds of the village—laughter, drums, and voices—reach your ears. You stand at the threshold of acceptance or hostility.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Present the medallion respectfully to the elders*: Attempt to earn trust peacefully (updates native_trust_earned: true, at_village: true)",
+                "target": "node_11"
+            },
+            "option_1": {
+                "text": "*Attempt to sneak into the village to avoid suspicion*: Risk angering the natives (updates native_trust_earned: false, at_village: true)",
+                "target": "node_12"
+            }
+        }
+    },
+    "node_9": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: true  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: possibly true  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has reached the village, possibly injured, with or without an ally, after hurrying through the storm.  \n\n**Narrative Description:**  \nRain pelts your face as you stumble into the village, the medallion clutched tightly. The natives pause their activities, eyes narrowing with suspicion. Your wound throbs, and exhaustion weighs heavily, but the medallion’s presence commands attention. The village elders approach, their expressions unreadable. You can choose to explain your quest openly, hoping for understanding, or attempt to barter with gifts from your pack to gain favor. The storm rages on, and the village’s mood is tense—one wrong move could turn hostility into violence.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Explain your quest openly and show the medallion*: Appeal to their respect for tradition (updates native_trust_earned: true)",
+                "target": "node_11"
+            },
+            "option_1": {
+                "text": "*Offer gifts to the villagers to gain favor*: Attempt to buy trust (updates native_trust_earned: true)",
+                "target": "node_11"
+            },
+            "option_2": {
+                "text": "*Act defensively and prepare for conflict*: Risk hostility and possible attack (updates native_trust_earned: false, wounded: true)",
+                "target": "node_13 ❌"
+            }
+        }
+    },
+    "node_10": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: true  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: possibly false  \n- ally_present: possibly true  \n- storm_coming: true  \n\n**Prerequisites:**  \nThe adventurer has chosen to wait out the storm, delaying arrival at the village.  \n\n**Narrative Description:**  \nYou find shelter beneath a large tree, the storm’s fury drumming on the leaves above. The air is thick with humidity and the scent of wet earth. Your wound, if any, begins to sting less as you tend to it carefully. The native ally, if present, shares stories of the island’s history, deepening your understanding of the medallion’s importance. However, the delay weighs heavily on your mind—the village may grow suspicious of your late arrival, and the temple’s secrets remain distant. As the rain subsides, you prepare to move forward, knowing the next steps will be critical.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Proceed cautiously to the village*: Attempt to explain the delay and present the medallion (updates at_village: true)",
+                "target": "node_11"
+            },
+            "option_1": {
+                "text": "*Try to find an alternate path to the village*: Risk getting lost or trapped (updates at_village: possibly false, wounded: possibly true)",
+                "target": "node_14 ❌"
+            }
+        }
+    },
+    "node_11": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: true  \n- at_village: true  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: possibly false  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has earned the natives’ trust by presenting the medallion respectfully or through gifts.  \n\n**Narrative Description:**  \nThe village elders nod solemnly as they accept the sacred medallion, their eyes reflecting a mixture of respect and ancient wisdom. The atmosphere shifts; what was once suspicion turns to cautious friendship. Your native ally smiles, proud of your success. The path to the temple entrance lies beyond the jungle outskirts, guarded by ancestral traps and puzzles. The elders share cryptic advice about the altar puzzle that protects the treasure vault, emphasizing the need for both the medallion and knowledge gained from allies. The sun breaks through the clouds, casting dappled light on the path ahead. You feel the weight of the final challenges but also the thrill of nearing your goal.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Travel directly to the temple entrance*: Face the jungle outskirts and traps head-on (updates at_temple_entrance: true)",
+                "target": "node_15"
+            },
+            "option_1": {
+                "text": "*Spend time with the natives to learn more about the puzzle*: Gain knowledge that may help solve the altar puzzle (updates ally_present: true, at_village: true)",
+                "target": "node_16"
+            }
+        }
+    },
+    "node_12": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: true  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: false  \n- ally_present: true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer attempted to sneak into the village despite having an ally, risking native hostility.  \n\n**Narrative Description:**  \nYour stealthy approach is met with sharp eyes and whispered warnings. The natives quickly surround you, their expressions hardening. The medallion in your hand does little to ease their suspicion when trust is broken by deception. Your ally looks torn but remains silent. The village elders demand an explanation, and the tension escalates rapidly. You can try to explain your intentions honestly now or attempt to flee before the situation worsens. The jungle outside offers uncertain refuge, but the village’s wrath is a formidable threat.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Explain your quest honestly now*: Attempt to salvage trust (updates native_trust_earned: true)",
+                "target": "node_11"
+            },
+            "option_1": {
+                "text": "*Flee into the jungle*: Risk getting lost or attacked (updates native_trust_earned: false, wounded: true)",
+                "target": "node_17 ❌"
+            }
+        }
+    },
+    "node_13": {
+        "description": "❌  \n**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: true  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: true  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer acted defensively in the village, provoking hostility and injury.  \n\n**Narrative Description:**  \nTension snaps like a brittle branch. The villagers, feeling threatened, attack swiftly. You are overwhelmed, sustaining serious wounds before your ally intervenes to pull you away. The medallion falls from your grasp, lost in the chaos. The village gates slam shut behind you, sealing your failure. The treasure remains out of reach, and the island’s mysteries fade into shadow. Your quest ends here, a cautionary tale of mistrust and rashness.  \n\n**Choices:**",
+        "options": {}
+    },
+    "node_14": {
+        "description": "❌  \n**Current State:**  \n- at_shore: false  \n- at_jungle_edge: true  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: true  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: possibly true  \n- ally_present: possibly true  \n- storm_coming: true  \n\n**Prerequisites:**  \nThe adventurer tried to find an alternate path to the village during the storm but got lost or trapped.  \n\n**Narrative Description:**  \nThe jungle’s tangled maze confuses your senses. The storm’s remnants soak the ground, turning trails into mud and obscuring landmarks. You stumble into a hidden pitfall trap, the sharp stakes piercing your leg. Pain and exhaustion overwhelm you as darkness creeps at the edges of your vision. Your calls for help go unanswered, swallowed by the relentless jungle. The treasure and the temple remain distant dreams as the island claims another lost soul.  \n\n**Choices:**",
+        "options": {}
+    },
+    "node_15": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: true  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: true  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: possibly false  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has traveled directly to the temple entrance after earning native trust.  \n\n**Narrative Description:**  \nThe jungle outskirts are dense and foreboding, but your path is clear. Ancient stone pillars rise from the undergrowth, carved with symbols that pulse faintly in the fading light. The temple entrance yawns before you, guarded by intricate mechanisms and the promise of the altar puzzle. The medallion’s weight in your pack is a comforting reminder of the journey so far. Your native ally, if present, offers insights into the temple’s secrets. The air hums with anticipation and the scent of old stone and moss. You can choose to enter the temple immediately or take time to study the carvings and prepare for the puzzle.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Enter the temple and attempt the puzzle immediately*: Face the challenge head-on (updates puzzle_solved: possibly false)",
+                "target": "node_18"
+            },
+            "option_1": {
+                "text": "*Study the carvings and prepare with ally’s help*: Increase chances of solving the puzzle (updates ally_present: true, puzzle_solved: false)",
+                "target": "node_16"
+            }
+        }
+    },
+    "node_16": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: true  \n- at_village: true  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: possibly false  \n- ally_present: true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer is spending time with natives or ally to learn about the altar puzzle before entering the temple.  \n\n**Narrative Description:**  \nSitting around a flickering fire, your native ally shares stories and wisdom about the temple’s ancient puzzles. The carvings on the altar are not mere decoration but a language of symbols and mechanisms that respond to the medallion’s power. You practice the sequences, learning to align the symbols and unlock the hidden passage. The night air is cool, and the village’s warmth offers comfort. Preparation feels like the key to success, and your confidence grows. When dawn breaks, the temple awaits, its secrets ready to be unveiled.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Proceed to the temple entrance to solve the puzzle*: Use newfound knowledge to attempt the altar puzzle (updates at_temple_entrance: true)",
+                "target": "node_18"
+            },
+            "option_1": {
+                "text": "*Rest longer to ensure readiness*: Risk delay but improve chances (updates wounded: false)",
+                "target": "node_19"
+            }
+        }
+    },
+    "node_17": {
+        "description": "❌  \n**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: false  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: true  \n- ally_present: true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer fled the village after failed sneaking attempt and was injured in the jungle.  \n\n**Narrative Description:**  \nThe jungle closes in as you run, branches clawing at your skin and roots threatening to trip you. Your pursuers’ shouts echo behind, growing closer. A misstep sends you tumbling down a steep embankment, pain exploding in your leg. Darkness creeps in as you lie trapped and alone, the medallion lost in the chaos. The island’s mysteries remain forever out of reach, your quest ended in desperation and defeat.  \n\n**Choices:**",
+        "options": {}
+    },
+    "node_18": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: true  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: true  \n- puzzle_solved: possibly true or false  \n- treasure_claimed: false  \n- wounded: possibly false  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer is attempting the altar puzzle at the temple entrance, with or without preparation.  \n\n**Narrative Description:**  \nThe altar stands before you, a complex array of symbols and rotating stones. The medallion fits perfectly into a carved indentation, and the mechanisms hum to life. Your hands tremble as you manipulate the symbols, recalling the lessons learned or relying on instinct. The puzzle resists, testing your resolve and understanding. Success will open the vault to the treasure; failure may trigger traps or seal the temple forever. The air is thick with tension, the weight of generations pressing down.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Focus carefully and solve the puzzle*: Use knowledge and patience (updates puzzle_solved: true)",
+                "target": "node_20 ✅"
+            },
+            "option_1": {
+                "text": "*Force the mechanism quickly*: Risk triggering traps (updates puzzle_solved: false, wounded: true)",
+                "target": "node_21 ❌"
+            }
+        }
+    },
+    "node_19": {
+        "description": "**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: true  \n- at_village: true  \n- at_collapsed_cave: false  \n- at_temple_entrance: false  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: false  \n- ally_present: true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer rested longer with the natives to ensure readiness before attempting the puzzle.  \n\n**Narrative Description:**  \nThe extra rest rejuvenates your body and sharpens your mind. Your ally’s guidance deepens your understanding of the temple’s mysteries. The village’s peaceful surroundings bolster your confidence. As dawn breaks, you feel prepared to face the altar puzzle with clarity and calm. The path to the temple entrance is clear, and the final challenge awaits.  \n\n**Choices:**",
+        "options": {
+            "option_0": {
+                "text": "*Proceed to the temple entrance to solve the puzzle*: Confident and ready (updates at_temple_entrance: true)",
+                "target": "node_18"
+            }
+        }
+    },
+    "node_20": {
+        "description": "✅  \n**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: true  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: true  \n- puzzle_solved: true  \n- treasure_claimed: true  \n- wounded: possibly false  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer has successfully solved the altar puzzle and accessed the treasure vault.  \n\n**Narrative Description:**  \nWith a satisfying click, the altar’s mechanisms shift, revealing a hidden chamber bathed in golden light. The treasure vault lies before you, filled with ancient artifacts, gold, and jewels beyond imagination. The carved obsidian medallion glows faintly, its purpose fulfilled. Relief and triumph wash over you as the island’s secrets unfold at last. Your journey, marked by peril and perseverance, culminates in this moment of victory. The native ally smiles, proud of your respect and success. The treasure is yours, a legacy reclaimed and a story to be told for generations.  \n\n**Choices:**",
+        "options": {}
+    },
+    "node_21": {
+        "description": "❌  \n**Current State:**  \n- at_shore: false  \n- at_jungle_edge: false  \n- medallion_found: true  \n- native_trust_earned: true  \n- at_village: false  \n- at_collapsed_cave: false  \n- at_temple_entrance: true  \n- puzzle_solved: false  \n- treasure_claimed: false  \n- wounded: true  \n- ally_present: possibly true  \n- storm_coming: false  \n\n**Prerequisites:**  \nThe adventurer forced the altar mechanism, triggering traps and injury.  \n\n**Narrative Description:**  \nA harsh grinding noise fills the chamber as the altar resists your forceful attempts. Suddenly, darts shoot from hidden holes, striking you painfully. The temple’s ancient defenses activate, sealing the vault and blocking any further progress. Bloodied and trapped, you realize the treasure will remain forever out of reach. The island’s mysteries close around you like a tomb, a harsh reminder that respect and patience were the true keys.  \n\n**Choices:**",
+        "options": {}
     }
-  },
-  "node_2": {
-    "description": "The jungle is thick with the sounds of life, the calls of unseen birds echoing through the canopy. The adventurer pushes through the underbrush, his eyes scanning for any sign of the treasure. Suddenly, he hears a rustling in the bushes. It could be a wild animal, or perhaps something more sinister.",
-    "options": {
-      "option_0": "node_5",
-      "option_1": "node_6"
-    }
-  },
-  "node_3": {
-    "description": "The village is a cluster of huts, smoke rising from a few cooking fires. The villagers eye the adventurer warily as he approaches. He knows he must tread carefully; the islanders are known to be suspicious of outsiders. A group of children play nearby, their laughter a stark contrast to the adults' guarded stares.",
-    "options": {
-      "option_0": "node_7",
-      "option_1": "node_8"
-    }
-  },
-  "node_4": {
-    "description": "The beach is quiet, the waves lapping gently at the shore. As the adventurer walks along the sand, he notices something glinting in the sunlight. It's a piece of metal, half-buried in the sand. Could it be a clue left by his grandfather?",
-    "options": {
-      "option_0": "node_9",
-      "option_1": "node_10"
-    }
-  },
-  "node_5": {
-    "description": "The adventurer parts the bushes to find a small monkey, chattering angrily at being disturbed. Relieved, he turns to leave, but his foot catches on a vine, sending him tumbling into a hidden pit. The fall is short, but the pit is deep enough to trap him. He realizes he must find a way out before nightfall.",
-    "options": {
-      "option_0": "node_11",
-      "option_1": "node_12"
-    }
-  },
-  "node_6": {
-    "description": "Deeper into the jungle, the adventurer finds a clearing with an ancient stone altar. Strange symbols are carved into its surface, and a sense of foreboding hangs in the air. He feels a connection to the place, as if it holds secrets of the past.",
-    "options": {
-      "option_0": "node_13",
-      "option_1": "node_14"
-    }
-  },
-  "node_7": {
-    "description": "The village elder is a wise-looking woman with eyes that seem to see into the adventurer's soul. She listens to his story with interest, nodding slowly. She offers him a choice: a map that might lead to the treasure, or a warning about the dangers that lie ahead.",
-    "options": {
-      "option_0": "node_15",
-      "option_1": "node_16"
-    }
-  },
-  "node_8": {
-    "description": "The villagers' demeanor softens as the adventurer presents his gifts. They invite him to join their meal, and he learns of a sacred site deep in the jungle that might hold clues to the treasure. However, they warn him of the traps set by their ancestors to protect it.",
-    "options": {
-      "option_0": "node_17",
-      "option_1": "node_18"
-    }
-  },
-  "node_9": {
-    "description": "The metal object is an old compass, its needle spinning wildly. As the adventurer examines it, he notices an inscription: \"To find the heart, follow the storm.\" It's a cryptic message, but it might be the key to finding the treasure.",
-    "options": {
-      "option_0": "node_19",
-      "option_1": "node_20"
-    }
-  },
-  "node_10": {
-    "description": "As the adventurer walks further along the beach, he spots a group of menacing figures approaching from the distance. They are armed and do not look friendly. Realizing he has been spotted, he must act quickly.",
-    "options": {
-      "option_0": "node_21",
-      "option_1": "node_22"
-    }
-  },
-  "node_11": {
-    "description": "The vines are slippery and weak, but the adventurer manages to pull himself out of the pit, his hands scraped and bleeding. He knows he must be more careful as he continues his journey.",
-    "options": {
-      "option_0": "node_4",
-      "option_1": "node_6"
-    }
-  },
-  "node_12": {
-    "description": "His calls echo through the jungle, but no one comes. As night falls, the adventurer realizes he is truly alone. The pit becomes his tomb as the jungle reclaims him. \u274c",
-    "options": {}
-  },
-  "node_13": {
-    "description": "The symbols are ancient, and as the adventurer traces them with his fingers, he feels a strange energy coursing through him. Suddenly, the ground beneath the altar shifts, revealing a hidden passageway.",
-    "options": {
-      "option_0": "node_23",
-      "option_1": "node_24"
-    }
-  },
-  "node_14": {
-    "description": "As the adventurer leaves the clearing, he hears a distant rumble. The sky darkens, and a storm begins to brew. He must find shelter quickly.",
-    "options": {
-      "option_0": "node_25",
-      "option_1": "node_3"
-    }
-  },
-  "node_15": {
-    "description": "The map is old and faded, but it shows a path through the jungle to a hidden cave. The adventurer sets out with renewed determination, but he knows the journey will not be easy.",
-    "options": {
-      "option_0": "node_26",
-      "option_1": "node_27"
-    }
-  },
-  "node_16": {
-    "description": "The elder advises caution, telling the adventurer of the island's many dangers. She suggests he seek the guidance of the spirits at the sacred site before proceeding.",
-    "options": {
-      "option_0": "node_17",
-      "option_1": "node_18"
-    }
-  },
-  "node_17": {
-    "description": "With a guide leading the way, the adventurer reaches the sacred site. The air is thick with mystery, and the guide performs a ritual to appease the spirits. The adventurer feels a sense of peace and clarity.",
-    "options": {
-      "option_0": "node_28",
-      "option_1": "node_29"
-    }
-  },
-  "node_18": {
-    "description": "Alone in the jungle, the adventurer's path is fraught with danger. He narrowly avoids several traps, but his luck runs out when he steps on a hidden pressure plate. The ground gives way beneath him, and he falls into a spiked pit. \u274c",
-    "options": {}
-  },
-  "node_19": {
-    "description": "The storm is fierce, but the adventurer presses on, using the compass to guide him. He reaches a cliff overlooking the sea, where he finds a hidden cave entrance. The roar of the storm is deafening, but he knows he is close to his goal.",
-    "options": {
-      "option_0": "node_30",
-      "option_1": "node_31"
-    }
-  },
-  "node_20": {
-    "description": "As the adventurer continues along the beach, he finds a small boat hidden among the rocks. It could be a way off the island, but it might also belong to someone dangerous.",
-    "options": {
-      "option_0": "node_32",
-      "option_1": "node_2"
-    }
-  },
-  "node_21": {
-    "description": "The jungle provides cover, but the adventurer is not safe yet. The men pursue him, and he must find a way to lose them.",
-    "options": {
-      "option_0": "node_33",
-      "option_1": "node_34"
-    }
-  },
-  "node_22": {
-    "description": "The men are pirates, and they are not interested in negotiation. They capture the adventurer, taking his supplies and leaving him tied to a tree. As the tide rises, he realizes he will not escape. \u274c",
-    "options": {}
-  },
-  "node_23": {
-    "description": "The passageway is dark and narrow, but it leads to a chamber filled with ancient artifacts. Among them is a map, similar to the one the village elder offered, but with additional markings.",
-    "options": {
-      "option_0": "node_35",
-      "option_1": "node_36"
-    }
-  },
-  "node_24": {
-    "description": "The adventurer marks the location on his map and decides to return later. As he makes his way back through the jungle, he encounters a group of hostile natives.",
-    "options": {
-      "option_0": "node_37",
-      "option_1": "node_3"
-    }
-  },
-  "node_25": {
-    "description": "The jungle offers little protection from the storm, and the adventurer is soon soaked and shivering. As the storm rages on, he realizes he must find better shelter or risk hypothermia.",
-    "options": {
-      "option_0": "node_38",
-      "option_1": "node_39"
-    }
-  },
-  "node_26": {
-    "description": "Following the map, the adventurer navigates through the jungle, avoiding traps and hostile wildlife. He finally reaches the cave, its entrance hidden behind a waterfall.",
-    "options": {
-      "option_0": "node_30",
-      "option_1": "node_40"
-    }
-  },
-  "node_27": {
-    "description": "Straying from the path, the adventurer becomes hopelessly lost. The jungle is unforgiving, and without a clear direction, he succumbs to exhaustion and despair. \u274c",
-    "options": {}
-  },
-  "node_28": {
-    "description": "During his meditation, the adventurer receives a vision of the treasure's location. He sees a cave hidden behind a waterfall, guarded by ancient traps.",
-    "options": {
-      "option_0": "node_26",
-      "option_1": "node_18"
-    }
-  },
-  "node_29": {
-    "description": "Leaving the sacred site, the adventurer feels a renewed sense of purpose. He knows the journey will be perilous, but he is determined to succeed.",
-    "options": {
-      "option_0": "node_26",
-      "option_1": "node_2"
-    }
-  },
-  "node_30": {
-    "description": "Inside the cave, the adventurer finds a series of puzzles and traps, each more challenging than the last. He must use all his wits and skills to navigate them safely.",
-    "options": {
-      "option_0": "node_41",
-      "option_1": "node_42"
-    }
-  },
-  "node_31": {
-    "description": "Waiting for the storm to pass, the adventurer is caught off guard by a landslide triggered by the heavy rain. He is buried beneath the rubble, his quest ending in tragedy. \u274c",
-    "options": {}
-  },
-  "node_32": {
-    "description": "The boat is abandoned, but it contains a journal detailing the island's history and the treasure's location. The adventurer now has valuable information to aid his quest.",
-    "options": {
-      "option_0": "node_26",
-      "option_1": "node_3"
-    }
-  },
-  "node_33": {
-    "description": "From the safety of the tree, the adventurer watches as the men pass below, unaware of his presence. Once they are gone, he climbs down and continues his journey.",
-    "options": {
-      "option_0": "node_6",
-      "option_1": "node_4"
-    }
-  },
-  "node_34": {
-    "description": "The trap is crude but effective, slowing the men long enough for the adventurer to escape. He knows he must be more cautious as he continues his quest.",
-    "options": {
-      "option_0": "node_3",
-      "option_1": "node_6"
-    }
-  },
-  "node_35": {
-    "description": "The map reveals a hidden path through the jungle, leading directly to the treasure. The adventurer sets out with renewed determination, knowing he is close to his goal.",
-    "options": {
-      "option_0": "node_26",
-      "option_1": "node_36"
-    }
-  },
-  "node_36": {
-    "description": "As the adventurer gathers the artifacts, he triggers a hidden trap. The chamber begins to collapse, and he barely escapes with his life, losing the artifacts in the process.",
-    "options": {
-      "option_0": "node_6",
-      "option_1": "node_3"
-    }
-  },
-  "node_37": {
-    "description": "The natives are wary but not hostile. Through gestures and broken language, the adventurer learns of a sacred site that might hold the key to the treasure.",
-    "options": {
-      "option_0": "node_17",
-      "option_1": "node_2"
-    }
-  },
-  "node_38": {
-    "description": "The adventurer finds a small cave, just large enough to provide shelter from the storm. As he waits for the weather to clear, he reflects on his journey and plans his next move.",
-    "options": {
-      "option_0": "node_26",
-      "option_1": "node_3"
-    }
-  },
-  "node_39": {
-    "description": "The makeshift shelter is flimsy, and the storm soon tears it apart. The adventurer is left exposed to the elements, his strength waning as the storm rages on. \u274c",
-    "options": {}
-  },
-  "node_40": {
-    "description": "Resting by the waterfall, the adventurer gathers his strength and prepares for the challenges ahead. He knows the cave holds the key to his grandfather's legacy.",
-    "options": {
-      "option_0": "node_30",
-      "option_1": "node_2"
-    }
-  },
-  "node_41": {
-    "description": "Solving the puzzles, the adventurer finally reaches the heart of the cave. There, he finds the treasure his grandfather sought: a chest filled with gold and ancient artifacts. His journey has been long and perilous, but he has succeeded where others have failed. \u2705",
-    "options": {}
-  },
-  "node_42": {
-    "description": "Attempting to bypass the traps, the adventurer triggers a deadly mechanism. The cave collapses around him, sealing his fate. \u274c",
-    "options": {}
-  }
 }

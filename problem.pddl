@@ -1,21 +1,37 @@
-(define (problem find-hidden-treasure)
-  (:domain island-adventure)
+(define (problem brava-island-treasure-quest)
+  (:domain brava-island-adventure)
   (:objects
-    adventurer1 - adventurer
-    shore jungle ruins treasure-chamber - location
-    key1 - object
-    jaguar - creature
+    adventurer - player
+    shore - location
+    jungle-edge - location
+    collapsed-cave - location
+    village - location
+    temple-entrance - location
+    medallion - item
+    native-ally - ally
+    deadly-trap - trap
   )
   (:init
-    (at adventurer1 shore)
-    (accessible shore)
-    (accessible jungle)
-    (creature-at jaguar jungle)
-    (object-at key1 ruins)
-    (path-revealed ruins)
-    (puzzle-solved ruins)
+    (player-at adventurer shore)
+    (at-shore adventurer)
+    (not (at-jungle-edge adventurer))
+    (not (at-village adventurer))
+    (not (at-collapsed-cave adventurer))
+    (not (at-temple-entrance adventurer))
+    (not (medallion-found adventurer))
+    (not (native-trust-earned adventurer))
+    (not (puzzle-solved adventurer))
+    (not (treasure-claimed adventurer))
+    (not (wounded adventurer))
+    (not (ally-present native-ally shore))
+    (not (ally-present native-ally jungle-edge))
+    (not (ally-present native-ally collapsed-cave))
+    (not (ally-present native-ally village))
+    (not (ally-present native-ally temple-entrance))
+    (not (storm-coming))
+    (trap-active deadly-trap collapsed-cave)
   )
   (:goal
-    (and (at adventurer1 treasure-chamber))
+    (and (treasure-claimed adventurer))
   )
 )

@@ -1,4 +1,3 @@
-```pddl
 (define (problem wizard-quest-to-castle)
 (:domain wizard-quest)
 (:objects
@@ -15,4 +14,3 @@
 (:goal
     (and (trial_completed wizard1 trial1) (trial_completed wizard1 trial2)))
 )
-```

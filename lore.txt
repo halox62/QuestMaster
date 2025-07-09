@@ -1,28 +1,43 @@
-title: ""
-
 quest_description:
   init: |
-    An adventurer arrives alone on an island with a backpack
+    An adventurer arrives alone on the shores of a mysterious island carrying a backpack, an old map, and a compass. The map, once belonging to his grandfather, reveals only part of the journey. To discover the final location of the treasure, he must first recover a sacred medallion hidden deep within the dangerous jungle.
 
   goal: |
-     find the hidden treasure on the island that his grandfather, also an adventurer, was looking for
+    The treasure lies deep within the temple at the far end of the island. To reach it, the adventurer must:
+      - Travel inland from the island shore to the jungle edge.
+      - Explore the collapsed cave to retrieve the carved obsidian medallion.
+      - Present the medallion to the natives at the village to earn their trust.
+      - Cross through the jungle outskirts toward the temple entrance.
+      - Solve the altar puzzle to access the treasure vault.
+
+  depth_constraints:
+    min_steps_to_goal: 6
+    max_steps_to_goal: 10
+    note: |
+      Each step of the journey must follow a fixed sequence of critical milestones:
+        - The player cannot reach the collapsed cave without first reaching the jungle edge.
+        - The medallion must be obtained before entering the village.
+        - Trust must be earned in the village before reaching the temple.
+        - The puzzle must be solved before claiming the treasure.
+      Shortcuts to the treasure are not allowed. Any bypass of a step should lead to failure or traps.
 
   obstacles: |
-    the natives, the jungle, traps near the treasure and the puzzles
+    Hostile natives who may attack or aid depending on the adventurer’s actions.
+    Deadly venomous traps hidden along jungle paths and cave corridors.
+    Misleading and confusing jungle trails that may cause the adventurer to get lost or trapped.
+    Sudden tropical storms or hurricanes that can impede progress or cause injury.
+    Complex ancient puzzles that require both the medallion and knowledge gained from allies.
+    Paths that may lead to injury, capture, or permanent failure.
 
   world_context: |
-    the island is located in central america where it is thought that there is a treasure the island is protected by not very friendly islands with foreigners where there is often a risk of hurricane
+    The island lies off the coast of Central America. Its dense jungle conceals long-forgotten ruins and ancient temples protected by ancestral mechanisms. The natives, protective of their heritage, inhabit the island’s interior. The sacred medallion, once used to communicate with the natives, is hidden inside a dangerous collapsed cave. The temple is far from the shore, requiring multiple stages of exploration through jungle, village, caves, and finally to the temple.
 
-branching_factor:
-  min_actions_per_state: 2
-  max_actions_per_state: 4
-  note: |
-    At each point in the story, the wizard should have at least 2 meaningful choices—such as whether to seek knowledge, attempt entry,
-    or explore—up to 4 when paths diverge more widely (e.g., which spell to learn or which area to explore).
-
-depth_constraints:
-  min_steps_to_goal: 5
-  max_steps_to_goal: 10
-  note: |
-    The shortest path might involve learning the correct spell directly and entering the castle.
-    A longer path could involve multiple diversions: failed attempts, side quests, or trials before reaching the library.
+  branching_factor:
+    min_actions_per_state: 2
+    max_actions_per_state: 4
+    note: |
+      Each decision point should offer at least two meaningful choices, including:
+      - Risky, direct routes with hazards and traps.
+      - Safer, longer detours that allow for healing, gaining allies, or gathering information.
+      - Opportunities to recover items or gain advantages.
+      - Decisions that influence native relations and subsequent paths.
