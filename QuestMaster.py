@@ -568,26 +568,12 @@ def saveGraphToJson(file_path="story.txt", output_file="langgraph_adventure.json
         graph = loadGraph(file_path)
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(graph, f, indent=4, ensure_ascii=False)
-        print(f"Graph saved successfully to {output_file}")
     except Exception as e:
         print(f"Error saving graph: {e}")
 
 
 
 def loadGraph(file_path="story.txt"):
-    """
-    Loads a story from a text file and converts it into a LangGraph-compatible graph structure.
-    
-    Args:
-        file_path (str): Path to the story text file. Defaults to "story.txt".
-    
-    Returns:
-        dict: A dictionary representing the graph nodes with descriptions and options.
-    
-    Raises:
-        FileNotFoundError: If the specified file is not found.
-        ValueError: If the file is empty or has invalid format.
-    """
     try:
         # Read the story file with UTF-8 encoding
         with open(file_path, "r", encoding="utf-8") as file:
@@ -775,8 +761,6 @@ def main():
 @app.route('/getGraph', methods=['GET'])
 def getUserPhotos():
     graph=loadGraph()
-    print(graph)
-
     return jsonify(graph), 200
 
 """if __name__ == "__main__":
