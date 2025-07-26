@@ -5,160 +5,205 @@
     (player-at ?p - player ?l - location)
     (has ?p - player ?i - item)
     (ally-present ?a - ally ?l - location)
-    (at-shore ?p - player)
-    (at-jungle-edge ?p - player)
-    (at-village ?p - player)
-    (at-collapsed-cave ?p - player)
-    (at-temple-entrance ?p - player)
-    (medallion-found ?p - player)
-    (native-trust-earned ?p - player)
-    (puzzle-solved ?p - player)
-    (treasure-claimed ?p - player)
     (wounded ?p - player)
-    (storm-coming)
+    (medallion-found)
+    (native-trust-earned)
+    (puzzle-solved)
+    (treasure-claimed)
+    (temple-accessible)
     (trap-active ?t - trap ?l - location)
     (trap-triggered ?t - trap ?l - location)
-    (puzzle-active ?z - puzzle ?l - location)
+    (at-jungle-edge)
+    (at-shore)
+    (at-village)
+    (at-collapsed-cave)
+    (lost-in-jungle)
+    (fatally-injured ?p - player)
+    (trapped ?p - player)
   )
-  (:constants altar-puzzle - puzzle)
-  (:action take-direct-jungle-path
-    :parameters (?p - player ?shore - location ?jungle - location)
-    :precondition (and (player-at ?p ?shore) (at-shore ?p))
-    :effect (and (player-at ?p ?jungle) (at-jungle-edge ?p) (not (player-at ?p ?shore)) (not (at-shore ?p)) (wounded ?p))
+  (:action venture-into-dense-jungle
+    :parameters (?p - player ?shore - location ?jungle_edge - location)
+    :precondition (and (player-at ?p ?shore) (at-shore))
+    :effect (and (not (player-at ?p ?shore)) (player-at ?p ?jungle_edge) (not (at-shore)) (at-jungle-edge))
   )
-  (:action follow-coastal-trail
-    :parameters (?p - player ?shore - location ?jungle - location)
-    :precondition (and (player-at ?p ?shore) (at-shore ?p))
-    :effect (and (player-at ?p ?jungle) (at-jungle-edge ?p) (not (player-at ?p ?shore)) (not (at-shore ?p)) (not (wounded ?p)))
+  (:action scout-along-shoreline
+    :parameters (?p - player ?shore - location ?jungle_edge - location)
+    :precondition (and (player-at ?p ?shore) (at-shore) (not (wounded ?p)))
+    :effect (and (not (player-at ?p ?shore)) (player-at ?p ?jungle_edge) (not (at-shore)) (at-jungle-edge) (not (wounded ?p)))
   )
-  (:action press-on-to-collapsed-cave-despite-wound
-    :parameters (?p - player ?jungle - location ?cave - location)
-    :precondition (and (player-at ?p ?jungle) (at-jungle-edge ?p) (wounded ?p))
-    :effect (and (player-at ?p ?cave) (at-collapsed-cave ?p) (wounded ?p) (not (player-at ?p ?jungle)) (not (at-jungle-edge ?p)))
+  (:action rest-and-prepare-supplies
+    :parameters (?p - player ?shore - location)
+    :precondition (and (player-at ?p ?shore) (at-shore) (not (wounded ?p)))
+    :effect (and (player-at ?p ?shore) (at-shore) (not (wounded ?p)))
   )
-  (:action retreat-to-coastal-trail-to-heal
-    :parameters (?p - player ?jungle - location ?shore - location)
-    :precondition (and (player-at ?p ?jungle) (at-jungle-edge ?p) (wounded ?p))
-    :effect (and (player-at ?p ?shore) (at-shore ?p) (wounded ?p) (not (player-at ?p ?jungle)) (not (at-jungle-edge ?p)))
+  (:action call-out-for-natives
+    :parameters (?p - player ?shore - location ?native - ally)
+    :precondition (and (player-at ?p ?shore) (at-shore) (not (ally-present ?native ?shore)))
+    :effect (and (ally-present ?native ?shore))
   )
-  (:action investigate-footprints
-    :parameters (?p - player ?jungle - location ?a - ally)
-    :precondition (and (player-at ?p ?jungle) (at-jungle-edge ?p) (not (wounded ?p)))
-    :effect (and (ally-present ?a ?jungle) (not (wounded ?p)))
+  (:action proceed-cautiously-to-collapsed-cave
+    :parameters (?p - player ?jungle_edge - location ?cave - location)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge))
+    :effect (and (not (player-at ?p ?jungle_edge)) (player-at ?p ?cave) (not (at-jungle-edge)) (at-collapsed-cave))
   )
-  (:action head-directly-to-collapsed-cave
-    :parameters (?p - player ?jungle - location ?cave - location)
-    :precondition (and (player-at ?p ?jungle) (at-jungle-edge ?p) (not (wounded ?p)))
-    :effect (and (player-at ?p ?cave) (at-collapsed-cave ?p) (not (player-at ?p ?jungle)) (not (at-jungle-edge ?p)))
+  (:action explore-jungle-outskirts-for-allies
+    :parameters (?p - player ?jungle_edge - location ?native - ally)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge))
+    :effect (and (ally-present ?native ?jungle_edge))
   )
-  (:action disarm-traps-carefully
-    :parameters (?p - player ?cave - location)
-    :precondition (and (player-at ?p ?cave) (at-collapsed-cave ?p))
-    :effect (and (medallion-found ?p) (not (wounded ?p)))
+  (:action set-simple-traps
+    :parameters (?p - player ?jungle_edge - location ?trap - trap)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge) (not (wounded ?p)))
+    :effect (and (trap-active ?trap ?jungle_edge) (not (wounded ?p)))
   )
-  (:action move-quickly-through-cave
-    :parameters (?p - player ?cave - location)
-    :precondition (and (player-at ?p ?cave) (at-collapsed-cave ?p))
-    :effect (and (medallion-found ?p) (wounded ?p))
+  (:action head-into-jungle-to-collapsed-cave
+    :parameters (?p - player ?jungle_edge - location ?cave - location)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge))
+    :effect (and (not (player-at ?p ?jungle_edge)) (player-at ?p ?cave) (not (at-jungle-edge)) (at-collapsed-cave))
   )
-  (:action trust-ally-completely
-    :parameters (?p - player ?a - ally ?cave - location)
-    :precondition (and (player-at ?p ?cave) (ally-present ?a ?cave) (medallion-found ?p))
-    :effect (and (at-collapsed-cave ?p) (ally-present ?a ?cave))
+  (:action follow-smoke-to-village
+    :parameters (?p - player ?jungle_edge - location ?village - location)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge))
+    :effect (and (not (player-at ?p ?jungle_edge)) (player-at ?p ?village) (not (at-jungle-edge)) (at-village))
   )
-  (:action keep-cautious-distance
-    :parameters (?p - player ?a - ally ?cave - location)
-    :precondition (and (player-at ?p ?cave) (ally-present ?a ?cave) (medallion-found ?p))
-    :effect (and (at-collapsed-cave ?p) (ally-present ?a ?cave))
+  (:action set-up-temporary-camp
+    :parameters (?p - player ?jungle_edge - location)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge) (not (wounded ?p)))
+    :effect (and (player-at ?p ?jungle_edge) (at-jungle-edge) (not (wounded ?p)))
   )
-  (:action hurry-to-village-through-storm
-    :parameters (?p - player ?cave - location ?village - location)
-    :precondition (and (player-at ?p ?cave) (medallion-found ?p))
-    :effect (and (player-at ?p ?village) (at-village ?p) (wounded ?p) (not (player-at ?p ?cave)) (not (at-collapsed-cave ?p)))
+  (:action search-carefully-for-medallion
+    :parameters (?p - player ?cave - location ?medallion - item)
+    :precondition (and (player-at ?p ?cave) (at-collapsed-cave) (not (wounded ?p)))
+    :effect (and (medallion-found) (has ?p ?medallion))
   )
-  (:action seek-shelter-and-wait-out-storm
-    :parameters (?p - player ?cave - location)
-    :precondition (and (player-at ?p ?cave) (medallion-found ?p))
-    :effect (and (storm-coming) (not (at-village ?p)))
+  (:action rush-through-cave-and-get-wounded
+    :parameters (?p - player ?cave - location ?trap - trap)
+    :precondition (and (player-at ?p ?cave) (at-collapsed-cave) (not (wounded ?p)))
+    :effect (and (wounded ?p) (trap-triggered ?trap ?cave))
   )
-  (:action push-forward-to-village-despite-injury
-    :parameters (?p - player ?cave - location ?village - location)
-    :precondition (and (player-at ?p ?cave) (wounded ?p) (medallion-found ?p))
-    :effect (and (player-at ?p ?village) (at-village ?p) (wounded ?p) (not (player-at ?p ?cave)) (not (at-collapsed-cave ?p)))
+  (:action retreat-to-jungle-edge
+    :parameters (?p - player ?cave - location ?jungle_edge - location)
+    :precondition (and (player-at ?p ?cave) (at-collapsed-cave))
+    :effect (and (not (player-at ?p ?cave)) (player-at ?p ?jungle_edge) (not (at-collapsed-cave)) (at-jungle-edge))
   )
-  (:action treat-wound-before-moving-on
-    :parameters (?p - player ?cave - location)
-    :precondition (and (player-at ?p ?cave) (wounded ?p) (medallion-found ?p))
-    :effect (and (not (wounded ?p)) (not (at-village ?p)))
+  (:action enter-cave-with-ally
+    :parameters (?p - player ?native - ally ?cave - location)
+    :precondition (and (player-at ?p ?cave) (ally-present ?native ?cave) (at-collapsed-cave) (not (medallion-found)))
+    :effect (and)
   )
-  (:action present-medallion-respectfully-to-elders
-    :parameters (?p - player ?a - ally ?village - location)
-    :precondition (and (player-at ?p ?village) (ally-present ?a ?village) (medallion-found ?p))
-    :effect (and (native-trust-earned ?p) (at-village ?p) (ally-present ?a ?village))
+  (:action take-medallion-and-go-to-village-with-ally
+    :parameters (?p - player ?native - ally ?cave - location ?village - location ?medallion - item)
+    :precondition (and (player-at ?p ?cave) (ally-present ?native ?cave) (at-collapsed-cave) (not (medallion-found)))
+    :effect (and (medallion-found) (has ?p ?medallion) (not (player-at ?p ?cave)) (player-at ?p ?village) (ally-present ?native ?village) (not (at-collapsed-cave)) (at-village) (native-trust-earned))
   )
-  (:action attempt-to-sneak-into-village
-    :parameters (?p - player ?a - ally ?village - location)
-    :precondition (and (player-at ?p ?village) (ally-present ?a ?village) (medallion-found ?p))
-    :effect (and (not (native-trust-earned ?p)) (at-village ?p) (ally-present ?a ?village))
+  (:action explore-jungle-outskirts-with-ally
+    :parameters (?p - player ?native - ally ?jungle_edge - location)
+    :precondition (and (player-at ?p ?jungle_edge) (ally-present ?native ?jungle_edge) (at-jungle-edge) (not (wounded ?p)))
+    :effect (and)
   )
-  (:action explain-quest-openly-and-show-medallion
+  (:action gain-ally-trust-with-gift
+    :parameters (?p - player ?native - ally ?shore - location)
+    :precondition (and (player-at ?p ?shore) (at-shore) (not (ally-present ?native ?shore)))
+    :effect (and (ally-present ?native ?shore))
+  )
+  (:action insist-on-alone
+    :parameters (?p - player ?native - ally ?shore - location ?jungle_edge - location)
+    :precondition (and (player-at ?p ?shore) (at-shore) (not (ally-present ?native ?shore)))
+    :effect (and (not (ally-present ?native ?shore)) (not (player-at ?p ?shore)) (player-at ?p ?jungle_edge) (not (at-shore)) (at-jungle-edge))
+  )
+  (:action ask-native-for-guidance
+    :parameters (?p - player ?native - ally ?shore - location ?jungle_edge - location)
+    :precondition (and (player-at ?p ?shore) (ally-present ?native ?shore) (at-shore))
+    :effect (and (not (player-at ?p ?shore)) (player-at ?p ?jungle_edge) (not (at-shore)) (at-jungle-edge))
+  )
+  (:action visit-village-to-earn-trust
     :parameters (?p - player ?village - location)
-    :precondition (and (player-at ?p ?village) (medallion-found ?p))
-    :effect (and (native-trust-earned ?p) (at-village ?p))
+    :precondition (and (player-at ?p ?village) (at-village) (not (native-trust-earned)) (medallion-found))
+    :effect (and (native-trust-earned))
   )
-  (:action offer-gifts-to-villagers-to-gain-favor
+  (:action attempt-negotiate-without-medallion
     :parameters (?p - player ?village - location)
-    :precondition (and (player-at ?p ?village) (medallion-found ?p))
-    :effect (and (native-trust-earned ?p) (at-village ?p))
+    :precondition (and (player-at ?p ?village) (at-village) (not (medallion-found)))
+    :effect (and (wounded ?p) (fatally-injured ?p))
   )
-  (:action act-defensively-and-prepare-for-conflict
-    :parameters (?p - player ?village - location ?a - ally)
-    :precondition (and (player-at ?p ?village) (medallion-found ?p))
-    :effect (and (not (native-trust-earned ?p)) (wounded ?p) (at-village ?p) (ally-present ?a ?village))
+  (:action leave-village-to-find-medallion
+    :parameters (?p - player ?village - location ?cave - location)
+    :precondition (and (player-at ?p ?village) (at-village) (not (medallion-found)))
+    :effect (and (not (player-at ?p ?village)) (player-at ?p ?cave) (not (at-village)) (at-collapsed-cave))
   )
-  (:action proceed-cautiously-to-village
+  (:action rest-at-jungle-edge
+    :parameters (?p - player ?jungle_edge - location)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge) (wounded ?p))
+    :effect (and (not (wounded ?p)))
+  )
+  (:action travel-to-village-with-medallion
+    :parameters (?p - player ?jungle_edge - location ?village - location ?medallion - item)
+    :precondition (and (player-at ?p ?jungle_edge) (at-jungle-edge) (medallion-found) (has ?p ?medallion))
+    :effect (and (not (player-at ?p ?jungle_edge)) (player-at ?p ?village) (not (at-jungle-edge)) (at-village))
+  )
+  (:action explore-jungle-outskirts-with-medallion
+    :parameters (?p - player ?native - ally ?jungle_edge - location ?medallion - item)
+    :precondition (and (player-at ?p ?jungle_edge) (ally-present ?native ?jungle_edge) (at-jungle-edge) (medallion-found) (has ?p ?medallion))
+    :effect (and)
+  )
+  (:action earn-native-trust-at-village
     :parameters (?p - player ?village - location)
-    :precondition (storm-coming)
-    :effect (and (player-at ?p ?village) (at-village ?p) (not (storm-coming)))
+    :precondition (and (player-at ?p ?village) (at-village) (medallion-found) (not (native-trust-earned)))
+    :effect (and (native-trust-earned))
   )
-  (:action try-to-find-alternate-path-to-village
-    :parameters (?p - player ?village - location)
-    :precondition (storm-coming)
-    :effect (and (not (at-village ?p)) (wounded ?p) (not (storm-coming)))
-  )
-  (:action travel-directly-to-temple-entrance
+  (:action journey-to-temple-entrance
     :parameters (?p - player ?village - location ?temple - location)
-    :precondition (and (player-at ?p ?village) (native-trust-earned ?p))
-    :effect (and (player-at ?p ?temple) (at-temple-entrance ?p) (not (player-at ?p ?village)) (not (at-village ?p)))
+    :precondition (and (player-at ?p ?village) (at-village) (native-trust-earned))
+    :effect (and (not (player-at ?p ?village)) (player-at ?p ?temple) (not (at-village)) (temple-accessible))
   )
-  (:action spend-time-with-natives-to-learn-puzzle
-    :parameters (?p - player ?a - ally ?village - location)
-    :precondition (and (player-at ?p ?village) (native-trust-earned ?p))
-    :effect (and (ally-present ?a ?village) (puzzle-active altar-puzzle ?village) (at-village ?p))
+  (:action learn-altar-puzzle
+    :parameters (?p - player ?village - location ?puzzle - puzzle)
+    :precondition (and (player-at ?p ?village) (at-village) (native-trust-earned))
+    :effect (and (puzzle-solved))
   )
-  (:action enter-temple-and-attempt-puzzle-immediately
+  (:action rest-before-final-leg
+    :parameters (?p - player ?village - location)
+    :precondition (and (player-at ?p ?village) (at-village) (not (wounded ?p)))
+    :effect (and)
+  )
+  (:action attempt-solve-altar-puzzle
+    :parameters (?p - player ?temple - location ?puzzle - puzzle)
+    :precondition (and (player-at ?p ?temple) (temple-accessible))
+    :effect (and (puzzle-solved))
+  )
+  (:action search-temple-for-hints
     :parameters (?p - player ?temple - location)
-    :precondition (and (player-at ?p ?temple) (at-temple-entrance ?p))
-    :effect (puzzle-active altar-puzzle ?temple)
+    :precondition (and (player-at ?p ?temple) (temple-accessible) (not (wounded ?p)))
+    :effect (and)
   )
-  (:action rest-longer-to-ensure-readiness
-    :parameters (?p - player)
-    :precondition (wounded ?p)
-    :effect (not (wounded ?p))
+  (:action enter-treasure-vault
+    :parameters (?p - player ?temple - location)
+    :precondition (and (player-at ?p ?temple) (temple-accessible) (puzzle-solved))
+    :effect (and (treasure-claimed))
   )
-  (:action proceed-to-temple-entrance-to-solve-puzzle
-    :parameters (?p - player ?a - ally ?village - location ?temple - location)
-    :precondition (and (player-at ?p ?village) (ally-present ?a ?village))
-    :effect (and (player-at ?p ?temple) (at-temple-entrance ?p) (not (player-at ?p ?village)) (not (at-village ?p)))
+  (:action inspect-treasure-for-traps
+    :parameters (?p - player ?temple - location)
+    :precondition (and (player-at ?p ?temple) (temple-accessible) (not (wounded ?p)))
+    :effect (and)
   )
-  (:action focus-carefully-and-solve-puzzle
-    :parameters (?p - player ?temple - location ?z - puzzle)
-    :precondition (and (player-at ?p ?temple) (puzzle-active ?z ?temple))
-    :effect (and (puzzle-solved ?p) (treasure-claimed ?p) (not (puzzle-active ?z ?temple)))
+  (:action take-treasure-and-leave
+    :parameters (?p - player ?temple - location)
+    :precondition (and (player-at ?p ?temple) (temple-accessible) (puzzle-solved) (treasure-claimed))
+    :effect (and)
   )
-  (:action force-mechanism-quickly
-    :parameters (?p - player ?temple - location ?z - puzzle ?t - trap)
-    :precondition (and (player-at ?p ?temple) (puzzle-active ?z ?temple))
-    :effect (and (not (puzzle-solved ?p)) (wounded ?p) (trap-triggered ?t ?temple) (not (puzzle-active ?z ?temple)))
+  (:action push-forward-to-find-medallion-wounded
+    :parameters (?p - player ?cave - location ?medallion - item)
+    :precondition (and (player-at ?p ?cave) (at-collapsed-cave) (wounded ?p))
+    :effect (and (medallion-found) (has ?p ?medallion))
+  )
+  (:action retreat-to-jungle-edge-to-heal
+    :parameters (?p - player ?cave - location ?jungle_edge - location)
+    :precondition (and (player-at ?p ?cave) (at-collapsed-cave) (wounded ?p))
+    :effect (and (not (wounded ?p)) (not (player-at ?p ?cave)) (player-at ?p ?jungle_edge) (not (at-collapsed-cave)) (at-jungle-edge))
+  )
+  (:action attempt-call-for-help-while-wounded
+    :parameters (?p - player ?native - ally ?cave - location)
+    :precondition (and (player-at ?p ?cave) (at-collapsed-cave) (wounded ?p) (not (ally-present ?native ?cave)))
+    :effect (and (fatally-injured ?p))
   )
 )

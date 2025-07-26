@@ -800,7 +800,6 @@ export class GameComponent implements OnInit {
   error = '';
   moveCount = 0;
 
-  // UI enhancements
   displayTitle = 'The Island';
   titleAnimation = true;
   particles: Array<{x: number, y: number, delay: number}> = [];
@@ -825,7 +824,6 @@ export class GameComponent implements OnInit {
   }
 
   startTitleAnimation() {
-    // Simulate typewriter effect for title
     setTimeout(() => {
       this.titleAnimation = false;
     }, 3000);

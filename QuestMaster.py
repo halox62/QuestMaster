@@ -17,6 +17,7 @@ from collections import defaultdict
 from flask_cors import CORS
 from langgraph.pregel import Pregel
 from typing import TypedDict
+import logging
 
 
 app = Flask(__name__)
@@ -25,9 +26,6 @@ CORS(app)
 
 load_dotenv()
 
-
-
-# Suppress Trio warning
 sys.excepthook = sys.__excepthook__
 
 # Pydantic models
@@ -332,6 +330,74 @@ Here is the Lore Document:
     ("user", "{lore}")
 ])
 
+def comment():
+    print("comment")
+    with open("domain.pddl", "r", encoding="utf-8") as file:
+        domain = file.read()
+   
+    with open("problem.pddl", "r", encoding="utf-8") as file:
+        problem = file.read()
+
+    comment_prompt_domain = ChatPromptTemplate.from_messages([
+    ("system", """You are an expert in PDDL (Planning Domain Definition Language).
+You will receive a PDDL domain file that includes `:types`, `:predicates`, and `:action` definitions.
+
+Your task is to **add inline comments to each line**, explaining clearly what each line or block does.
+
+Guidelines:
+- Comments must start with `;`
+- Keep comments concise and informative
+- For structural parentheses or closing lines, you may skip or briefly explain (e.g., `; end of action`)
+- Do **not** alter the syntax of the original domain file, only insert comments
+
+Example:
+(:predicates
+(player-at ?p - player ?l - location) ; the player is at a specific location
+)
+     
+Return only the commented domain file.
+"""),
+    ("user", "{domain}")
+])
+    
+
+    comment_prompt_problem = ChatPromptTemplate.from_messages([
+    ("system", """You are an expert in PDDL (Planning Domain Definition Language).
+You will receive a PDDL problem file, including `:objects`, `:init`, and `:goal` sections.
+
+Your task is to **add inline comments to each line**, explaining the meaning and purpose of each entry.
+
+Guidelines:
+- Start comments with `;`
+- Comments should be clear and to the point
+- You may skip simple closing parentheses or comment them briefly (e.g., `; end of init`)
+- Keep the structure and syntax of the original file unchanged. Only insert comments at the correct lines.
+
+Example:
+(:init
+(player-at adventurer shore) ; the adventurer starts at the shore
+(has adventurer map) ; the adventurer is carrying a map
+)
+     
+Return only the commented problem file.
+"""),
+    ("user", "{prompt}")
+])
+    
+    domain_comment = llm.invoke(comment_prompt_domain.format_messages(domain=domain))
+    domain_comment_res= domain_comment.content.strip()
+
+    problem_comment = llm.invoke(comment_prompt_problem.format_messages(prompt=problem))
+    problem_comment_res= problem_comment.content.strip()
+
+    with open("commented_domain.pddl", "w", encoding="utf-8") as f:
+        f.write(domain_comment_res)
+
+    with open("commented_problem.pddl", "w", encoding="utf-8") as f:
+        f.write(problem_comment_res)
+
+
+
 
 def reflectionAgent(error_log: str = "") -> Tuple[str, str, bool]:
     try:
@@ -422,11 +488,43 @@ Proposed Modifications:
 
 
         elif choice == 'n':
-            print("Storia non valida")
-            return "","",False
+            # Chiedi le modifiche all'utente
+            user_mods = input("Quali modifiche vuoi apportare alla storia?\n")
+
+            storyPromptGenerate = ChatPromptTemplate.from_messages([
+                ("system", """
+        You are an expert interactive storyteller.
+
+        You are given:
+        - The original version of a fantasy narrative.
+        - A set of proposed changes to that story (e.g., add characters, modify goals, make locations accessible).
+
+        Your task is to rewrite the original story **by applying the proposed changes**, making sure the result is coherent, logical, and still aligned with the narrative tone and structure.
+
+        Return only the final, rewritten story.
+
+        ---
+
+        Original Story:
+        {story}
+
+        Proposed Modifications:
+        {options}
+        """),
+                ("user", "Story:\n{story},Proposed Modifications:\n{options}")
+            ])
+            
+            story_corrV = llm.invoke(storyPromptGenerate.format_messages(story=story, options=user_mods))
+            story_fixed = story_corrV.content.strip()
+
+            try:
+                with open("story.txt", "w") as f:
+                    f.write(story_fixed)
+                    return "", "", True
+            except Exception as e:
+                print("Errore nella storia:", e)
+                return "", "", False
   
-
-
 
     # Prompt per correggere il dominio
     domain_corr_prompt = ChatPromptTemplate.from_messages([
@@ -575,36 +673,29 @@ def saveGraphToJson(file_path="story.txt", output_file="langgraph_adventure.json
 
 def loadGraph(file_path="story.txt"):
     try:
-        # Read the story file with UTF-8 encoding
         with open(file_path, "r", encoding="utf-8") as file:
             story = file.read().strip()
         
-        # Check if the file is empty
         if not story:
             raise ValueError("Story file is empty or invalid.")
 
-        # Regex to split the story into nodes (each starting with a number followed by a dot)
         node_pattern = re.compile(r'^(\d+)\s*(.*?)(?=^\d+\s*|\Z)', re.DOTALL | re.MULTILINE)
         nodes = node_pattern.findall(story)
 
-        # Initialize graph structures
         graph = {}
         edges = defaultdict(list)
 
-        # Parse each node
         for node_number, node_content in nodes:
             node_number = node_number.strip()
             if not node_number.isdigit():
                 raise ValueError(f"Invalid node number: {node_number}")
 
-            # Split node content into description and choices
             node_content = node_content.strip()
             choice_split_pattern = re.compile(r'\n\s*→\s*')
             parts = choice_split_pattern.split(node_content)
             description = parts[0].strip() if parts else ""
             choices = parts[1:] if len(parts) > 1 else []
 
-            # Parse choices using regex to extract text and target node
             choice_pattern = re.compile(r'(.+?)\s*\[go to (\d+(?:\s*[✅❌])?)\]', re.DOTALL)
             outgoing = []
             for choice in choices:
@@ -613,7 +704,6 @@ def loadGraph(file_path="story.txt"):
                     text, target = match.groups()
                     outgoing.append({"text": text.strip(), "target": target.strip()})
 
-            # Store node data
             graph[node_number] = {
                 "description": description,
                 "options": outgoing
@@ -728,6 +818,7 @@ def reflect_node(state: PlanningState):
 
 graph = StateGraph(PlanningState)
 
+# Definizione nodi
 graph.set_entry_point("start")
 graph.add_node("start", start_node)
 graph.add_node("generate_story", generate_story_node)
@@ -747,24 +838,36 @@ graph.add_conditional_edges(
     lambda s: "generate_domain" if s["restart_from_domain"] else "run_planner"
 )
 
-
 appG = graph.compile()
 
 def main():
    input_state = PlanningState(lore_text=lore_text)
    final_state = appG.invoke(input_state)
    print("✅ Piano completato con successo") if final_state["plan_success"] else print("❌ Nessun piano trovato")
-   #success, stdout, stderr = run_fast_downward("domain.pddl", "problem.pddl")
-   
-    
+   comment()
 
 @app.route('/getGraph', methods=['GET'])
-def getUserPhotos():
-    graph=loadGraph()
-    return jsonify(graph), 200
+def get_graph():
+    try:
+        graph = loadGraph()
+        return jsonify(graph), 200
+    except Exception as e:
+        logging.exception("Errore nel caricamento del grafo")
+        return jsonify({"success": False, "error": str(e)}), 500
 
-"""if __name__ == "__main__":
-    main()"""
+@app.route('/genStory', methods=['GET'])
+def generate_story():
+    try:
+        main() 
+        return jsonify({"success": True, "message": "Storia generata"}), 200
+    except Exception as e:
+        logging.exception("Errore nella generazione della storia")
+        return jsonify({"success": False, "error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(host = 'localhost', port = 8080, debug = True)
+
+
+"""if __name__ == "__main__":
+    main()"""

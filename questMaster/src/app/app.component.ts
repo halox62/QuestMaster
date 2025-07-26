@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { GameComponent } from './game/game.component';
-import { HttpClientModule } from '@angular/common/http';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [GameComponent],
+  imports: [RouterOutlet],
   template: `
-    <app-adventure-game></app-adventure-game>
+    <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.css']
 })

@@ -1,0 +1,39 @@
+<div class="dashboard-container">
+  <div class="header">
+    <h1>Story Generator</h1>
+  </div>
+
+  <div class="main-content">
+    <div class="generate-section">
+      <button
+        class="btn-generate"
+        (click)="generateStory()"
+        [disabled]="isGenerating">
+        <span class="btn-icon">✨</span>
+        {{ isGenerating ? 'Generando Storia...' : 'Genera Storia' }}
+      </button>
+
+      <div class="loading" *ngIf="isGenerating">
+        <div class="spinner"></div>
+        <p>Sto creando la tua storia...</p>
+      </div>
+    </div>
+
+    <div class="result-section" *ngIf="storyResult">
+      <div class="success-message">
+        <span class="success-icon">✅</span>
+        Storia generata con successo!
+      </div>
+      <div class="story-result">
+        <pre>{{ storyResult | json }}</pre>
+      </div>
+    </div>
+
+    <div class="error-section" *ngIf="error">
+      <div class="error-message">
+        <span class="error-icon">❌</span>
+        {{ error }}
+      </div>
+    </div>
+  </div>
+</div>
